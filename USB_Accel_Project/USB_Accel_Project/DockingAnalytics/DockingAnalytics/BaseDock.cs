@@ -593,10 +593,18 @@ namespace DockingAnalytics
             DockingAnalytics._xmlFile myFile = new DockingAnalytics._xmlFile(ADCSampleCaptureFileName);
             ArrayList zedDataArrayList = new ArrayList();
 
-            for (int i = 0; i < gp.ZedGraphControl.GraphPane.CurveList[Controller.graphCurveListIndex].Points.Count; i++)
+            // TODO: For now, this is only adding the data that was collected by the recording to the file.
+            // This will break existing expected functionality with existing graph saves (They are expected to 
+            // save all data points that are currently graphed).
+            // Probable solution: Separate save method for a graph without recorded data, and one for a graph with recorded data
+            foreach (int datapoint in InformationHolder.Instance().Data)
             {
-                zedDataArrayList.Add(gp.ZedGraphControl.GraphPane.CurveList[Controller.graphCurveListIndex].Points[i].Y);
+                zedDataArrayList.Add(datapoint);
             }
+            //for (int i = 0; i < gp.ZedGraphControl.GraphPane.CurveList[Controller.graphCurveListIndex].Points.Count; i++)
+            //{
+            //    zedDataArrayList.Add(gp.ZedGraphControl.GraphPane.CurveList[Controller.graphCurveListIndex].Points[i].Y);
+            //}
             myFile.AddAccelerationValues(zedDataArrayList);
             myFile.dsSentry_data.sampling_Freq = DockingAnalytics.GlobalVars.AccelFreq; ;
             //myFile.dsSentry_data.accel_Vg_Calibration = DockingAnalytics.GlobalVars.AccelYScale;

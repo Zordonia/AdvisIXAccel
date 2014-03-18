@@ -218,10 +218,10 @@ namespace DockingAnalytics
             GraphEventInstance.CreatedGraph = gd2;
             OnGraphCreated(GraphEventInstance);
 
-            foreach (_xmlFile._dsSentry_data._band band in oFile.XMLFile.dsSentry_data.bandList)
-            {
-                ZedGraph.BandObjList.Add(new BandObj(band.center_Freq - band.bandwidth / 2, band.bandwidth, OpenedFile.MagnitudeData.Curve, gd2.ZedGraphControl, band.TimeStampCreated, DateTime.Now, band.quant_Level), gd2.ZedGraphControl);
-            }
+            //foreach (_xmlFile._dsSentry_data._band band in oFile.XMLFile.dsSentry_data.bandList)
+            //{
+            //    ZedGraph.BandObjList.Add(new BandObj(band.center_Freq - band.bandwidth / 2, band.bandwidth, OpenedFile.MagnitudeData.Curve, gd2.ZedGraphControl, band.TimeStampCreated, DateTime.Now, band.quant_Level), gd2.ZedGraphControl);
+            //}
             //SpectroGraphDock sp = new SpectroGraphDock();
             //sp.GraphName = OpenedFile.FileName;
             //sp.AddCurve(OpenedFile.AccelerationData.Curve, CurveType.Acceleration, oFile.FileName);
@@ -563,7 +563,7 @@ namespace DockingAnalytics
             
             if(dock.ZedGraphControl.GraphPane.CurveList.Count == 0 || graphCurveListIndex > dock.ZedGraphControl.GraphPane.CurveList.Count)
             {
-                InformationHolder.Instance().zedGraphData.Add(new NoDupePointList());
+                InformationHolder.Instance().zedGraphData.Add(new PointPairList());
                 
 
                 LineItem zedGraphCurve = dock.ZedGraphControl.GraphPane.AddCurve("USB Accel", InformationHolder.Instance().zedGraphData[GraphListComboBoxIndex], Color.Red, SymbolType.None);
@@ -607,9 +607,9 @@ namespace DockingAnalytics
             if (isReading)
             {
                 GraphDock dock = (GraphDock)GraphDockList[GraphListComboBoxIndex];
-                NoDupePointList zedGraphDataList = InformationHolder.Instance().zedGraphData[GraphListComboBoxIndex];
+                PointPairList zedGraphDataList = InformationHolder.Instance().zedGraphData[GraphListComboBoxIndex];
                 //dock.ZedGraphControl.GraphPane.CurveList[graphCurveListIndex].Points = zedGraphData[graphCurveListIndex];
-                zedGraphDataList.FilterData(dock.ZedGraphControl.GraphPane, dock.ZedGraphControl.GraphPane.XAxis, dock.ZedGraphControl.GraphPane.YAxis);
+                // zedGraphDataList.FilterData(dock.ZedGraphControl.GraphPane, dock.ZedGraphControl.GraphPane.XAxis, dock.ZedGraphControl.GraphPane.YAxis);
                 dock.UpdateZedGraphThreadSafe(InformationHolder.Instance().zedGraphData[GraphListComboBoxIndex]);
             }
         }
@@ -928,11 +928,15 @@ namespace DockingAnalytics
     class InformationHolder
     {
         private static InformationHolder singleton = null;
-        public List<NoDupePointList> zedGraphData;
+        public List<PointPairList> zedGraphData;
+        public List<int> Data { get; set; }
+
+        public int Resolution { get; set; }
 
         public InformationHolder()
         {
-            zedGraphData = new List<NoDupePointList>();
+            zedGraphData = new List<PointPairList>();
+            Data = new List<int>();
         }
         public static InformationHolder Instance()
         {
@@ -941,6 +945,15 @@ namespace DockingAnalytics
                 singleton = new InformationHolder();
             }
             return singleton;
+        }
+
+        public void Add(int graphIndex, int x, int y)
+        {
+            if (Data.Count % Resolution == 0)
+            {
+                zedGraphData[graphIndex].Add(x, y);
+            }
+            Data.Add(y);
         }
     }
 }

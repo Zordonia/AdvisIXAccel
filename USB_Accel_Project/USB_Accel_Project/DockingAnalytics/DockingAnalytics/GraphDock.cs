@@ -519,8 +519,8 @@ namespace DockingAnalytics
 
         }
 
-        public delegate void UpdateZedgraphDelegate(NoDupePointList data);
-        public void UpdateZedGraphThreadSafe(NoDupePointList data)
+        public delegate void UpdateZedgraphDelegate(PointPairList data);
+        public void UpdateZedGraphThreadSafe(PointPairList data)
         {
             if (this.InvokeRequired)
             {
@@ -534,9 +534,9 @@ namespace DockingAnalytics
                 double max = Double.MinValue;
 
                 CurveItem curve = this.zedGraphControl1.GraphPane.CurveList[0];
-                if (data.TotalCount > this.zedGraphControl1.GraphPane.XAxis.Scale.Max)
+                if (data.Count > this.zedGraphControl1.GraphPane.XAxis.Scale.Max)
                 {
-                    this.zedGraphControl1.GraphPane.XAxis.Scale.Max = data.TotalCount + 250000;
+                    this.zedGraphControl1.GraphPane.XAxis.Scale.Max = data.Count + 250000;
                 }
 
                 this.zedGraphControl1.Update();

@@ -608,7 +608,7 @@ namespace DockingAnalytics
                 writer.WriteAttributeString("timestamp_Start", dsSentry_data.timestamp_Start.ToString("MM/dd/yyyy hh:mm:ss tt K"));
                 writer.WriteAttributeString("timestamp_End", dsSentry_data.timestamp_End.ToString("MM/dd/yyyy hh:mm:ss tt K"));
                 writer.WriteAttributeString("capture_Type", dsSentry_data.capture_type);
-                writer.WriteAttributeString("num_Bands", BandObjList.Count.ToString());
+               //  writer.WriteAttributeString("num_Bands", BandObjList.Count.ToString());
                 writer.WriteAttributeString("num_Captures_Battery", dsSentry_data.num_captures_battery.ToString());
                 writer.WriteAttributeString("num_Alarms_Battery", dsSentry_data.num_alarms_battery.ToString());
                 writer.WriteAttributeString("battery_Change_Timestamp", dsSentry_data.battery_change_timestamp.ToString("MM/dd/yyyy hh:mm:ss tt K"));
@@ -629,32 +629,32 @@ namespace DockingAnalytics
                 writer.WriteEndElement();
 
 
-                IEnumerator<BandObj> bandEnum = BandObjList.GetEnumerator();
-                int num = 1;
-                while (bandEnum.MoveNext())
-                {
-                    BandObj band = bandEnum.Current;
-                    writer.WriteStartElement("band_data");
-                    writer.WriteAttributeString("node_Serial", dsSentry_data.node_Serial);
-                    writer.WriteAttributeString("band_Number", num.ToString());
-                    writer.WriteAttributeString("band_Timestamp_Created", band.TimeStamp_Created.ToString());
-                    writer.WriteAttributeString("band_Timestamp_LastEdit", band.TimeStamp_LastEdit.ToString());
-                    writer.WriteAttributeString("description", band.Description);
-                    writer.WriteAttributeString("center_Freq", band.FREQ.ToString());
-                    writer.WriteAttributeString("bandwidth", band.BANDWIDTH.ToString());
-                    writer.WriteAttributeString("threshold_Level", band.ALARM.ToString());
-                    writer.WriteAttributeString("quant_Level", band.QuantLevel.ToString());
-                    writer.WriteAttributeString("max_Reg_Val", band.PEAK_FREQ.ToString());
-                    if (band.BAND_SUM > band.ALARM)
-                        writer.WriteAttributeString("alarm_State", "True");
-                    else
-                        writer.WriteAttributeString("alarm_State", "False");
-                    writer.WriteAttributeString("times_To_Integrate_Power", dsSentry_data.band.times_integrate_pwr.ToString());
-                    writer.WriteAttributeString("times_Threshold_Exceed_Alarm_Trigger", dsSentry_data.band.times_thres_exceed_alarm_trig.ToString());
-                    writer.WriteAttributeString("times_To_Repeat_Reference_Signal", dsSentry_data.band.times_repeat_ref_sig.ToString());
-                    writer.WriteEndElement();
-                    num++;
-                }
+                //IEnumerator<BandObj> bandEnum = BandObjList.GetEnumerator();
+                //int num = 1;
+                //while (bandEnum.MoveNext())
+                //{
+                //    BandObj band = bandEnum.Current;
+                //    writer.WriteStartElement("band_data");
+                //    writer.WriteAttributeString("node_Serial", dsSentry_data.node_Serial);
+                //    writer.WriteAttributeString("band_Number", num.ToString());
+                //    writer.WriteAttributeString("band_Timestamp_Created", band.TimeStamp_Created.ToString());
+                //    writer.WriteAttributeString("band_Timestamp_LastEdit", band.TimeStamp_LastEdit.ToString());
+                //    writer.WriteAttributeString("description", band.Description);
+                //    writer.WriteAttributeString("center_Freq", band.FREQ.ToString());
+                //    writer.WriteAttributeString("bandwidth", band.BANDWIDTH.ToString());
+                //    writer.WriteAttributeString("threshold_Level", band.ALARM.ToString());
+                //    writer.WriteAttributeString("quant_Level", band.QuantLevel.ToString());
+                //    writer.WriteAttributeString("max_Reg_Val", band.PEAK_FREQ.ToString());
+                //    if (band.BAND_SUM > band.ALARM)
+                //        writer.WriteAttributeString("alarm_State", "True");
+                //    else
+                //        writer.WriteAttributeString("alarm_State", "False");
+                //    writer.WriteAttributeString("times_To_Integrate_Power", dsSentry_data.band.times_integrate_pwr.ToString());
+                //    writer.WriteAttributeString("times_Threshold_Exceed_Alarm_Trigger", dsSentry_data.band.times_thres_exceed_alarm_trig.ToString());
+                //    writer.WriteAttributeString("times_To_Repeat_Reference_Signal", dsSentry_data.band.times_repeat_ref_sig.ToString());
+                //    writer.WriteEndElement();
+                //    num++;
+                //}
 
                 writer.WriteStartElement("reference_data");
                 writer.WriteAttributeString("lut_Data", dsSentry_data.lut_data.ToString());

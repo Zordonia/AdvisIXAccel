@@ -433,23 +433,23 @@ namespace DockingAnalytics
                                //     return temp;
                                // }
 
-            if (DrawBinLevels)
-            {
-                IEnumerator bandListEnum = BandObjList.GetEnumerator();
-                while (bandListEnum.MoveNext())
-                {
-                    BandObj temp = (BandObj)bandListEnum.Current;
-                    if (temp.WESTLOC < xMin) { temp.WESTLOC = 0; }
-                    if (temp.WESTLOC > xMax) { continue; }
-                    if (temp.EASTLOC > xMax) { temp.EASTLOC = xMax; }
-                    if (temp.EASTLOC < xMin) { continue; }
-                    this.AddBinBox(temp.WESTLOC * (GlobalVars.XACTMAX / xMax),
-                        temp.EASTLOC * (GlobalVars.XACTMAX / xMax),
-                        temp.ALARM * (GlobalVars.YACTMAX / GlobalVars.YMAX),
-                        0,
-                        5 * GraphInformation.NCurves,
-                        Color.Red);
-                }
+            //if (DrawBinLevels)
+            //{
+            //    IEnumerator bandListEnum = BandObjList.GetEnumerator();
+            //    while (bandListEnum.MoveNext())
+            //    {
+            //        BandObj temp = (BandObj)bandListEnum.Current;
+            //        if (temp.WESTLOC < xMin) { temp.WESTLOC = 0; }
+            //        if (temp.WESTLOC > xMax) { continue; }
+            //        if (temp.EASTLOC > xMax) { temp.EASTLOC = xMax; }
+            //        if (temp.EASTLOC < xMin) { continue; }
+            //        this.AddBinBox(temp.WESTLOC * (GlobalVars.XACTMAX / xMax),
+            //            temp.EASTLOC * (GlobalVars.XACTMAX / xMax),
+            //            temp.ALARM * (GlobalVars.YACTMAX / GlobalVars.YMAX),
+            //            0,
+            //            5 * GraphInformation.NCurves,
+            //            Color.Red);
+            //    }
 
 
                 // SECTION REMOVED FROM PREVIOUS ANALYTICS AND TENDED TO WORK CORRECTLY
@@ -464,7 +464,7 @@ namespace DockingAnalytics
                 //        bTemp.getAlarMax() * (GlobalVars.YACTMAX / GlobalVars.YMAX),
                 //        0, 5 * NumFiles, Color.Red);
                 //}
-            }
+            // }
 
             SwitchToOrthographicView();
             DrawHeadsUpDisplay();
@@ -928,26 +928,26 @@ namespace DockingAnalytics
         public void UpdateMenu()
         {
             ToolStripMenuItem tsmitem = new ToolStripMenuItem("Band");
-            if (BandObjList.Count > 0)
-            {
-                zoomMenuStrip.DropDownItems.Add(tsmitem);
-            }
-            for(int i = 0; i < BandObjList.Count; i++)
-            {
-                ToolStripMenuItem tsmi = new ToolStripMenuItem("Band " +(i+1));
-                BandObj temp = BandObjList.Get(i);
-                String bandObjInfo = "Bandwidth: " + temp.BANDWIDTH + Environment.NewLine +
-                                        "Center Frequency: " + temp.FREQ + Environment.NewLine +
-                                        "Alarm Status: " + (temp.ALARM < temp.BAND_SUM) ;
-                ToolStripMenuItem tsmiBandInfo = new ToolStripMenuItem(bandObjInfo);
-                tsmi.DropDownItems.Add(tsmiBandInfo);
-                tsmiBandInfo.Tag = temp;
-                tsmiBandInfo.Click += new EventHandler(BandZoomClick);
-                tsmitem.DropDownItems.Add(tsmi);
-                tsmi.Tag = tsmiBandInfo;
+            //if (BandObjList.Count > 0)
+            //{
+            //    zoomMenuStrip.DropDownItems.Add(tsmitem);
+            //}
+            //for(int i = 0; i < BandObjList.Count; i++)
+            //{
+            //    ToolStripMenuItem tsmi = new ToolStripMenuItem("Band " +(i+1));
+            //    BandObj temp = BandObjList.Get(i);
+            //    String bandObjInfo = "Bandwidth: " + temp.BANDWIDTH + Environment.NewLine +
+            //                            "Center Frequency: " + temp.FREQ + Environment.NewLine +
+            //                            "Alarm Status: " + (temp.ALARM < temp.BAND_SUM) ;
+            //    ToolStripMenuItem tsmiBandInfo = new ToolStripMenuItem(bandObjInfo);
+            //    tsmi.DropDownItems.Add(tsmiBandInfo);
+            //    tsmiBandInfo.Tag = temp;
+            //    tsmiBandInfo.Click += new EventHandler(BandZoomClick);
+            //    tsmitem.DropDownItems.Add(tsmi);
+            //    tsmi.Tag = tsmiBandInfo;
                 
-                tsmi.Click += new EventHandler(BandZoomClick);
-            }
+            //    tsmi.Click += new EventHandler(BandZoomClick);
+            //}
             myRangeTrackBar= new RangeTrackBarToolStripItem();
             RangeTrackBar control = myRangeTrackBar.Control as RangeTrackBar;
             if (control != null)
