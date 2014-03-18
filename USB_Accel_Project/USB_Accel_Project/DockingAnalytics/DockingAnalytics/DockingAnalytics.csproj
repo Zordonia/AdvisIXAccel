@@ -1,0 +1,260 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{A3BF2ED8-5215-4A0A-A81E-1E78947EA474}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DockingAnalytics</RootNamespace>
+    <AssemblyName>DockingAnalytics</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="LibUsbDotNet">
+      <HintPath>..\..\LibUsbDotNet.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenTK, Version=1.0.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\OpenTK\1.0\Binaries\OpenTK\Release\OpenTK.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenTK.GLControl, Version=1.0.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\OpenTK\1.0\Binaries\OpenTK\Release\OpenTK.GLControl.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WeifenLuo.WinFormsUI.Docking, Version=2.5.0.27399, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\DockPanel_Src\WinFormsUI\bin\Release\WeifenLuo.WinFormsUI.Docking.dll</HintPath>
+    </Reference>
+    <Reference Include="ZedGraph, Version=5.0.9.28768, Culture=neutral, PublicKeyToken=02a83cbd123fcd60, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\zedgraph\source\bin\Release\ZedGraph.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AccelerationInfo.cs" />
+    <Compile Include="AnalyticsController.cs" />
+    <Compile Include="BaseDock.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BaseDock.Designer.cs">
+      <DependentUpon>BaseDock.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BaseObject.cs" />
+    <Compile Include="CurveInfo.cs" />
+    <Compile Include="CurveObject.cs" />
+    <Compile Include="Document.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ExplorerDock.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ExplorerDock.Designer.cs">
+      <DependentUpon>ExplorerDock.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FFT.cs" />
+    <Compile Include="File.cs" />
+    <Compile Include="USBControlDock.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="USBControlDock.Designer.cs">
+      <DependentUpon>USBControlDock.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Gauge.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Gauge.Designer.cs">
+      <DependentUpon>Gauge.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GlobalVars.cs" />
+    <Compile Include="GraphDock.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GraphDock.Designer.cs">
+      <DependentUpon>GraphDock.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GraphEventArgs.cs" />
+    <Compile Include="GraphInfo.cs" />
+    <Compile Include="LightSelection.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LightSelection.Designer.cs">
+      <DependentUpon>LightSelection.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MagnitudeInfo.cs" />
+    <Compile Include="PowerInfo.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RangeTrackBar.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="RangeTrackBar.Designer.cs">
+      <DependentUpon>RangeTrackBar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RangeTrackBarToolStripItem.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="RMSChartDoc.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RMSChartDoc.Designer.cs">
+      <DependentUpon>RMSChartDoc.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RMSGaugeDoc.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RMSGaugeDoc.Designer.cs">
+      <DependentUpon>RMSGaugeDoc.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SpectroGraphDock.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SpectroGraphDock.Designer.cs">
+      <DependentUpon>SpectroGraphDock.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SphereCamera.cs" />
+    <Compile Include="TestGL.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TestGL.Designer.cs">
+      <DependentUpon>TestGL.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TexLib.cs" />
+    <Compile Include="UpdateBand.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UpdateBand.Designer.cs">
+      <DependentUpon>UpdateBand.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UpdateForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UpdateForm.Designer.cs">
+      <DependentUpon>UpdateForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UpdateGraph.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UpdateGraph.Designer.cs">
+      <DependentUpon>UpdateGraph.cs</DependentUpon>
+    </Compile>
+    <Compile Include="VelocityInfo.cs" />
+    <Compile Include="Vertex3.cs" />
+    <Compile Include="VRMSChartControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="VRMSChartControl.Designer.cs">
+      <DependentUpon>VRMSChartControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="_xmlFile.cs" />
+    <EmbeddedResource Include="BaseDock.resx">
+      <DependentUpon>BaseDock.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Document.resx">
+      <DependentUpon>Document.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ExplorerDock.resx">
+      <DependentUpon>ExplorerDock.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="USBControlDock.resx">
+      <DependentUpon>USBControlDock.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Gauge.resx">
+      <DependentUpon>Gauge.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GraphDock.resx">
+      <DependentUpon>GraphDock.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LightSelection.resx">
+      <DependentUpon>LightSelection.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="RangeTrackBar.resx">
+      <DependentUpon>RangeTrackBar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RMSChartDoc.resx">
+      <DependentUpon>RMSChartDoc.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RMSGaugeDoc.resx">
+      <DependentUpon>RMSGaugeDoc.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SpectroGraphDock.resx">
+      <DependentUpon>SpectroGraphDock.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TestGL.resx">
+      <DependentUpon>TestGL.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UpdateForm.resx">
+      <DependentUpon>UpdateForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UpdateGraph.resx">
+      <DependentUpon>UpdateGraph.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VRMSChartControl.resx">
+      <DependentUpon>VRMSChartControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="app.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
