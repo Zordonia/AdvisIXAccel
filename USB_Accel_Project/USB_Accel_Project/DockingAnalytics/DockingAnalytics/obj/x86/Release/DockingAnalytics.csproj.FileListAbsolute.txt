@@ -26,3 +26,6 @@ C:\Users\Gordon\Documents\GitHub\IXAccel\USB_Accel_Project\USB_Accel_Project\Doc
 C:\Users\Gordon\Documents\GitHub\IXAccel\USB_Accel_Project\USB_Accel_Project\DockingAnalytics\DockingAnalytics\bin\Release\ZedGraph.dll
 C:\Users\Gordon\Documents\GitHub\IXAccel\USB_Accel_Project\USB_Accel_Project\DockingAnalytics\DockingAnalytics\obj\x86\Release\DockingAnalytics.exe
 C:\Users\Gordon\Documents\GitHub\IXAccel\USB_Accel_Project\USB_Accel_Project\DockingAnalytics\DockingAnalytics\obj\x86\Release\DockingAnalytics.pdb
+C:\Users\advis\Documents\AdvisIXAccel\USB_Accel_Project\USB_Accel_Project\DockingAnalytics\DockingAnalytics\bin\Release\DockingAnalytics.exe.config
+C:\Users\advis\Documents\AdvisIXAccel\USB_Accel_Project\USB_Accel_Project\DockingAnalytics\DockingAnalytics\obj\x86\Release\DockingAnalytics.exe
+C:\Users\advis\Documents\AdvisIXAccel\USB_Accel_Project\USB_Accel_Project\DockingAnalytics\DockingAnalytics\obj\x86\Release\DockingAnalytics.pdb
