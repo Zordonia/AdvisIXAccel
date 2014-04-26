@@ -1004,6 +1004,7 @@ namespace DockingAnalytics
             // If we have more data points than desired, remove them by rolling the window forward.
             if (zedGraphData[graphIndex].Count * AppSettings.ResolutionOfGraph > AppSettings.SecondsToGraphData * AppSettings.SamplingFrequency)
             {
+                // Changes
                 zedGraphData[graphIndex].RemoveAt(0);
             }
 
