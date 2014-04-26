@@ -722,7 +722,7 @@ namespace DockingAnalytics
                     if (!wholeUsbDevice.ClaimInterface(usbInterfaceInfo.Descriptor.InterfaceID))
                         throw new Exception("Failed to claim interface 2.");
 
-                    if (!wholeUsbDevice.SetAltInterface(8))
+                    if (!wholeUsbDevice.SetAltInterface(1))
                         throw new Exception("Failed to set alternate interface.");
                 }
 
@@ -820,9 +820,9 @@ namespace DockingAnalytics
                     seed = 0;
                     for (i = 0; i < handle.Data.Length; i += 2)
                     {
-                        InformationHolder.Instance().Add(Controller.GraphListComboBoxIndex, (Int32)Controller.graphXIndex++, (Int16)((handle.Data[i]) + (handle.Data[i + 1] << 8)));
+                        //InformationHolder.Instance().Add(Controller.GraphListComboBoxIndex, (Int32)Controller.graphXIndex++, (Int16)((handle.Data[i]) + (handle.Data[i + 1] << 8)));
                         //InformationHolder.Instance().zedGraphData[graphList.Add(Controller.graphXIndex++, (Int16)((handle.Data[i]) + (handle.Data[i + 1] << 8)));
-                        //InformationHolder.Instance().zedGraphData[Controller.GraphListComboBoxIndex].Add(Controller.graphXIndex++, (Int16)((handle.Data[i]) + (handle.Data[i + 1] << 8)));
+                        InformationHolder.Instance().zedGraphData[Controller.GraphListComboBoxIndex].Add(Controller.graphXIndex++, (Int16)((handle.Data[i]) + (handle.Data[i + 1] << 8)));
                         //writer.Write((Int16)((rawAccelData[i]) + (rawAccelData[i + 1] << 8)) + ",");
 
                         //Only read one channel
