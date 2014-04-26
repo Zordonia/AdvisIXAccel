@@ -589,15 +589,21 @@ namespace DockingAnalytics
         {
             GraphDock gp = dockPanel1.ActiveDocument as GraphDock;
 
-            string ADCSampleCaptureFileName = "GraphData_" + DateTime.Now.ToString("_MM_dd_yyyy_HH_mm_ss") + ".ixs";
-            DockingAnalytics._xmlFile myFile = new DockingAnalytics._xmlFile(ADCSampleCaptureFileName);
+            string adcSampleCaptureFileName = "{0}_GraphData_" + DateTime.Now.ToString("_MM_dd_yyyy_HH_mm_ss") + ".ixs";
+            saveFile(InformationHolder.HighGainContainer().Data, String.Format(adcSampleCaptureFileName, "HighGain_"));
+            saveFile(InformationHolder.LowGainContainer().Data, String.Format(adcSampleCaptureFileName, "LowGain_"));
+        }
+
+        private void saveFile(List<int> data, String filename)
+        {
+            DockingAnalytics._xmlFile myFile = new DockingAnalytics._xmlFile(filename);
             ArrayList zedDataArrayList = new ArrayList();
 
             // TODO: For now, this is only adding the data that was collected by the recording to the file.
             // This will break existing expected functionality with existing graph saves (They are expected to 
             // save all data points that are currently graphed).
             // Probable solution: Separate save method for a graph without recorded data, and one for a graph with recorded data
-            foreach (int datapoint in InformationHolder.HighGainContainer().Data)
+            foreach (int datapoint in data)
             {
                 zedDataArrayList.Add(datapoint);
             }
@@ -624,6 +630,5 @@ namespace DockingAnalytics
             myFile.dsSentry_data.timestamp_End = DateTime.Now;
             myFile.XmlWrite();
         }
-
     }
 }

@@ -11,7 +11,7 @@ namespace DockingAnalytics
         /// <summary>
         /// The Sampling Frequency
         /// </summary>
-        public static int SamplingFrequency
+        public static double SamplingFrequency
         {
             get
             {
@@ -30,7 +30,7 @@ namespace DockingAnalytics
                 sfreq = value;
             }
         }
-        static int? sfreq;
+        static double? sfreq;
         
         /// <summary>
         /// How many seconds of data to save (based on sampling frequency)

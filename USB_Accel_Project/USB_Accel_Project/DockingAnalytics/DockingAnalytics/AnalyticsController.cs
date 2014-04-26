@@ -548,7 +548,8 @@ namespace DockingAnalytics
             //first make sure there is a curve to add data to
             GraphDock dock = (GraphDock)GraphDockList[GraphListComboBoxIndex];
             graphCurveListIndex = 0;
-
+            dock.ZedGraphControl.GraphPane.XAxis.Title.Text = "Number of Samples";
+            dock.ZedGraphControl.GraphPane.YAxis.Title.Text = "Digital Acceleration Number";
             if (dock.ZedGraphControl.GraphPane.CurveList.Count > 0)
             {
                 foreach (CurveItem curve in dock.ZedGraphControl.GraphPane.CurveList)
@@ -564,14 +565,22 @@ namespace DockingAnalytics
             if(dock.ZedGraphControl.GraphPane.CurveList.Count == 0 || graphCurveListIndex > dock.ZedGraphControl.GraphPane.CurveList.Count)
             {
                 InformationHolder.HighGainContainer().zedGraphData.Add(new PointPairList());
-                
+                InformationHolder.LowGainContainer().zedGraphData.Add(new PointPairList());
 
-                LineItem zedGraphCurve = dock.ZedGraphControl.GraphPane.AddCurve("USB Accel", InformationHolder.HighGainContainer().zedGraphData[GraphListComboBoxIndex], Color.Red, SymbolType.None);
-                zedGraphCurve.Tag = "USB";
-                zedGraphCurve.Line.Width = 1.5F;
-                zedGraphCurve.Symbol.Fill = new Fill(Color.White);
-                zedGraphCurve.Symbol.Size = 5;
-                zedGraphCurve.Label.IsVisible = false;
+                // Set up high gain curve
+                LineItem highGainZedGraphCurve = dock.ZedGraphControl.GraphPane.AddCurve("USB High Gain Accel", InformationHolder.HighGainContainer().zedGraphData[GraphListComboBoxIndex], Color.DeepSkyBlue, SymbolType.None);
+                highGainZedGraphCurve.Tag = "USB High Gain";
+                highGainZedGraphCurve.Line.Width = 1.5F;
+                highGainZedGraphCurve.Symbol.Fill = new Fill(Color.White);
+                highGainZedGraphCurve.Symbol.Size = 5;
+                highGainZedGraphCurve.Label.IsVisible = false;
+
+                LineItem lowGainZedGraphCurve = dock.ZedGraphControl.GraphPane.AddCurve("USB Low Gain Accel", InformationHolder.LowGainContainer().zedGraphData[GraphListComboBoxIndex], Color.Red, SymbolType.None);
+                lowGainZedGraphCurve.Tag = "USB Low Gain";
+                lowGainZedGraphCurve.Line.Width = 1.5F;
+                lowGainZedGraphCurve.Symbol.Fill = new Fill(Color.White);
+                lowGainZedGraphCurve.Symbol.Size = 5;
+                lowGainZedGraphCurve.Label.IsVisible = false;
 
                 dock.ZedGraphControl.GraphPane.YAxis.Scale.Min = -4096;
                 dock.ZedGraphControl.GraphPane.YAxis.Scale.Max = 4096;
@@ -607,10 +616,12 @@ namespace DockingAnalytics
             if (isReading)
             {
                 GraphDock dock = (GraphDock)GraphDockList[GraphListComboBoxIndex];
-                PointPairList zedGraphDataList = InformationHolder.HighGainContainer().zedGraphData[GraphListComboBoxIndex];
+                PointPairList highGainZedGraphDataList = InformationHolder.HighGainContainer().zedGraphData[GraphListComboBoxIndex];
+                PointPairList lowGainZedGraphDataList = InformationHolder.LowGainContainer().zedGraphData[GraphListComboBoxIndex];
                 //dock.ZedGraphControl.GraphPane.CurveList[graphCurveListIndex].Points = zedGraphData[graphCurveListIndex];
                 // zedGraphDataList.FilterData(dock.ZedGraphControl.GraphPane, dock.ZedGraphControl.GraphPane.XAxis, dock.ZedGraphControl.GraphPane.YAxis);
                 dock.UpdateZedGraphThreadSafe(InformationHolder.HighGainContainer().zedGraphData[GraphListComboBoxIndex]);
+                dock.UpdateZedGraphThreadSafe(InformationHolder.LowGainContainer().zedGraphData[GraphListComboBoxIndex]);
             }
         }
 
@@ -816,11 +827,23 @@ namespace DockingAnalytics
                     if (ec != ErrorCode.Success)
                         throw new Exception("Failed getting async result: " + ec.ToString());
 
+                    uint toggle = 0;
                     // Show some information on the completed transfer.
                     seed = 0;
                     for (i = 0; i < handle.Data.Length; i += 2)
                     {
-                        InformationHolder.HighGainContainer().Add(Controller.GraphListComboBoxIndex, (Int32)Controller.graphXIndex++, (Int16)((handle.Data[i]) + (handle.Data[i + 1] << 8)));
+                        toggle++;
+                        if (toggle % 2 == 0)
+                        {
+                            toggle = 0; 
+                            InformationHolder.HighGainContainer().Add(Controller.GraphListComboBoxIndex, (Int32)Controller.graphXIndex++, (Int16)((handle.Data[i]) + (handle.Data[i + 1] << 8)));
+
+                        }
+                        else
+                        {
+                            InformationHolder.LowGainContainer().Add(Controller.GraphListComboBoxIndex, (Int32)Controller.graphXIndex++, (Int16)((handle.Data[i]) + (handle.Data[i + 1] << 8)));
+
+                        }
                         //InformationHolder.Instance().zedGraphData[graphList.Add(Controller.graphXIndex++, (Int16)((handle.Data[i]) + (handle.Data[i + 1] << 8)));
                         // InformationHolder.Instance().zedGraphData[Controller.GraphListComboBoxIndex].Add(Controller.graphXIndex++, (Int16)((handle.Data[i]) + (handle.Data[i + 1] << 8)));
                         //writer.Write((Int16)((rawAccelData[i]) + (rawAccelData[i + 1] << 8)) + ",");
@@ -928,6 +951,14 @@ namespace DockingAnalytics
     /// </summary>
     class InformationHolder
     {
+        public enum GainType
+        {
+            HighGain,
+            LowGain
+        }
+
+        public GainType Gain {get;set;}
+
         private static InformationHolder highGainSingleton = null;
 
         private static InformationHolder lowGainSingleton = null;
@@ -947,8 +978,19 @@ namespace DockingAnalytics
             if (highGainSingleton == null)
             {
                 highGainSingleton = new InformationHolder();
+                highGainSingleton.Gain = GainType.HighGain;
             }
             return highGainSingleton;
+        }
+
+        public static InformationHolder LowGainContainer()
+        {
+            if (lowGainSingleton == null)
+            {
+                lowGainSingleton = new InformationHolder();
+                highGainSingleton.Gain = GainType.HighGain;
+            }
+            return lowGainSingleton;
         }
 
         public void Add(int graphIndex, int x, int y)
