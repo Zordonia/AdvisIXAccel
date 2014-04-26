@@ -40,6 +40,8 @@ namespace DockingAnalytics
             this.DockStateChanged += new EventHandler(GraphDock_DockStateChanged);
             this.ParentChanged += new EventHandler(GraphDock_ParentChanged);
             this.MouseUp += new MouseEventHandler(GraphDock_MouseUp);
+            this.ZedGraphControl.GraphPane.Title.IsVisible = false;
+            // this.ZedGraphControl.GraphPane.XAxis.Title = 
         }
 
         public ZedGraphControl ZedGraphControl { get { return zedGraphControl1; } }

@@ -563,10 +563,10 @@ namespace DockingAnalytics
             
             if(dock.ZedGraphControl.GraphPane.CurveList.Count == 0 || graphCurveListIndex > dock.ZedGraphControl.GraphPane.CurveList.Count)
             {
-                InformationHolder.Instance().zedGraphData.Add(new PointPairList());
+                InformationHolder.HighGainContainer().zedGraphData.Add(new PointPairList());
                 
 
-                LineItem zedGraphCurve = dock.ZedGraphControl.GraphPane.AddCurve("USB Accel", InformationHolder.Instance().zedGraphData[GraphListComboBoxIndex], Color.Red, SymbolType.None);
+                LineItem zedGraphCurve = dock.ZedGraphControl.GraphPane.AddCurve("USB Accel", InformationHolder.HighGainContainer().zedGraphData[GraphListComboBoxIndex], Color.Red, SymbolType.None);
                 zedGraphCurve.Tag = "USB";
                 zedGraphCurve.Line.Width = 1.5F;
                 zedGraphCurve.Symbol.Fill = new Fill(Color.White);
@@ -607,10 +607,10 @@ namespace DockingAnalytics
             if (isReading)
             {
                 GraphDock dock = (GraphDock)GraphDockList[GraphListComboBoxIndex];
-                PointPairList zedGraphDataList = InformationHolder.Instance().zedGraphData[GraphListComboBoxIndex];
+                PointPairList zedGraphDataList = InformationHolder.HighGainContainer().zedGraphData[GraphListComboBoxIndex];
                 //dock.ZedGraphControl.GraphPane.CurveList[graphCurveListIndex].Points = zedGraphData[graphCurveListIndex];
                 // zedGraphDataList.FilterData(dock.ZedGraphControl.GraphPane, dock.ZedGraphControl.GraphPane.XAxis, dock.ZedGraphControl.GraphPane.YAxis);
-                dock.UpdateZedGraphThreadSafe(InformationHolder.Instance().zedGraphData[GraphListComboBoxIndex]);
+                dock.UpdateZedGraphThreadSafe(InformationHolder.HighGainContainer().zedGraphData[GraphListComboBoxIndex]);
             }
         }
 
@@ -820,7 +820,7 @@ namespace DockingAnalytics
                     seed = 0;
                     for (i = 0; i < handle.Data.Length; i += 2)
                     {
-                        InformationHolder.Instance().Add(Controller.GraphListComboBoxIndex, (Int32)Controller.graphXIndex++, (Int16)((handle.Data[i]) + (handle.Data[i + 1] << 8)));
+                        InformationHolder.HighGainContainer().Add(Controller.GraphListComboBoxIndex, (Int32)Controller.graphXIndex++, (Int16)((handle.Data[i]) + (handle.Data[i + 1] << 8)));
                         //InformationHolder.Instance().zedGraphData[graphList.Add(Controller.graphXIndex++, (Int16)((handle.Data[i]) + (handle.Data[i + 1] << 8)));
                         // InformationHolder.Instance().zedGraphData[Controller.GraphListComboBoxIndex].Add(Controller.graphXIndex++, (Int16)((handle.Data[i]) + (handle.Data[i + 1] << 8)));
                         //writer.Write((Int16)((rawAccelData[i]) + (rawAccelData[i + 1] << 8)) + ",");
@@ -928,41 +928,52 @@ namespace DockingAnalytics
     /// </summary>
     class InformationHolder
     {
-        private static InformationHolder singleton = null;
+        private static InformationHolder highGainSingleton = null;
+
+        private static InformationHolder lowGainSingleton = null;
+
         public List<PointPairList> zedGraphData;
         public List<int> Data { get; set; }
 
-        public int Resolution { get; set; }
+        int totalCount = 0;
 
         public InformationHolder()
         {
             zedGraphData = new List<PointPairList>();
             Data = new List<int>();
-            Resolution = 8;
         }
-        public static InformationHolder Instance()
+        public static InformationHolder HighGainContainer()
         {
-            if (singleton == null)
+            if (highGainSingleton == null)
             {
-                singleton = new InformationHolder();
+                highGainSingleton = new InformationHolder();
             }
-            return singleton;
+            return highGainSingleton;
         }
 
         public void Add(int graphIndex, int x, int y)
         {
-            if (Resolution <= 0) { Resolution = 1; }
-            try
+            if (AppSettings.ResolutionOfGraph <= 0) { AppSettings.ResolutionOfGraph = 1; }
+            if (totalCount % AppSettings.ResolutionOfGraph == 0)
             {
-                if (Data.Count % Resolution == 0)
-                {
-                    zedGraphData[graphIndex].Add(x, y);
-                }
-                Data.Add(y);
+                zedGraphData[graphIndex].Add(x, y);
             }
-            catch (Exception e)
+
+            // If we have more data points than desired, remove them by rolling the window forward.
+            if (zedGraphData[graphIndex].Count * AppSettings.ResolutionOfGraph > AppSettings.SecondsToGraphData * AppSettings.SamplingFrequency)
             {
-                throw;
+                zedGraphData[graphIndex].RemoveAt(0);
+            }
+
+            // Increment the total count and add to the data that we will save.
+            totalCount++;
+            Data.Add(y);
+
+            // If we have more recored more data than we want, roll the window forward by removing stale data.
+            if (Data.Count > AppSettings.SecondsToSaveData * AppSettings.SamplingFrequency)
+            {
+                Data.RemoveAt(0);
+                totalCount = 0;
             }
         }
     }

@@ -597,7 +597,7 @@ namespace DockingAnalytics
             // This will break existing expected functionality with existing graph saves (They are expected to 
             // save all data points that are currently graphed).
             // Probable solution: Separate save method for a graph without recorded data, and one for a graph with recorded data
-            foreach (int datapoint in InformationHolder.Instance().Data)
+            foreach (int datapoint in InformationHolder.HighGainContainer().Data)
             {
                 zedDataArrayList.Add(datapoint);
             }
