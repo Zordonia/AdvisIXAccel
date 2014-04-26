@@ -102,7 +102,6 @@
             // ZedGraphFrontPage
             // 
             this.ZedGraphFrontPage.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.ZedGraphFrontPage.IsEnableBandAdd = false;
             this.ZedGraphFrontPage.Location = new System.Drawing.Point(2, 218);
             this.ZedGraphFrontPage.Name = "ZedGraphFrontPage";
             this.ZedGraphFrontPage.ScrollGrace = 0D;

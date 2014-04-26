@@ -820,9 +820,9 @@ namespace DockingAnalytics
                     seed = 0;
                     for (i = 0; i < handle.Data.Length; i += 2)
                     {
-                        //InformationHolder.Instance().Add(Controller.GraphListComboBoxIndex, (Int32)Controller.graphXIndex++, (Int16)((handle.Data[i]) + (handle.Data[i + 1] << 8)));
+                        InformationHolder.Instance().Add(Controller.GraphListComboBoxIndex, (Int32)Controller.graphXIndex++, (Int16)((handle.Data[i]) + (handle.Data[i + 1] << 8)));
                         //InformationHolder.Instance().zedGraphData[graphList.Add(Controller.graphXIndex++, (Int16)((handle.Data[i]) + (handle.Data[i + 1] << 8)));
-                        InformationHolder.Instance().zedGraphData[Controller.GraphListComboBoxIndex].Add(Controller.graphXIndex++, (Int16)((handle.Data[i]) + (handle.Data[i + 1] << 8)));
+                        // InformationHolder.Instance().zedGraphData[Controller.GraphListComboBoxIndex].Add(Controller.graphXIndex++, (Int16)((handle.Data[i]) + (handle.Data[i + 1] << 8)));
                         //writer.Write((Int16)((rawAccelData[i]) + (rawAccelData[i + 1] << 8)) + ",");
 
                         //Only read one channel
@@ -938,6 +938,7 @@ namespace DockingAnalytics
         {
             zedGraphData = new List<PointPairList>();
             Data = new List<int>();
+            Resolution = 8;
         }
         public static InformationHolder Instance()
         {
@@ -950,11 +951,19 @@ namespace DockingAnalytics
 
         public void Add(int graphIndex, int x, int y)
         {
-            if (Data.Count % Resolution == 0)
+            if (Resolution <= 0) { Resolution = 1; }
+            try
             {
-                zedGraphData[graphIndex].Add(x, y);
+                if (Data.Count % Resolution == 0)
+                {
+                    zedGraphData[graphIndex].Add(x, y);
+                }
+                Data.Add(y);
             }
-            Data.Add(y);
+            catch (Exception e)
+            {
+                throw;
+            }
         }
     }
 }
