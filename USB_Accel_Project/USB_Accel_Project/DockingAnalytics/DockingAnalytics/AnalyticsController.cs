@@ -582,6 +582,7 @@ namespace DockingAnalytics
                 lowGainZedGraphCurve.Symbol.Size = 5;
                 lowGainZedGraphCurve.Label.IsVisible = false;
 
+
                 dock.ZedGraphControl.GraphPane.YAxis.Scale.Min = -4096;
                 dock.ZedGraphControl.GraphPane.YAxis.Scale.Max = 4096;
                 dock.ZedGraphControl.GraphPane.XAxis.Scale.Min = 0;
@@ -949,7 +950,7 @@ namespace DockingAnalytics
     /// <summary>
     /// Class for holding onto the graph data for the MainForm.
     /// </summary>
-    class InformationHolder
+    public class InformationHolder
     {
         public enum GainType
         {

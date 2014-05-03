@@ -207,6 +207,23 @@ namespace DockingAnalytics
         }
         static double? numBits;
 
+        /// <summary>
+        /// The LSB value.
+        /// </summary>
+        public static double LSBValue
+        {
+            get
+            {
+                getAppSetting("LSBValue", ref lsbValue);
+                return lsbValue.Value;
+            }
+            set
+            {
+                lsbValue = value;
+            }
+        }
+        static double? lsbValue;
+
         static void getAppSetting(String appSetting, ref double? value)
         {
             double val;
