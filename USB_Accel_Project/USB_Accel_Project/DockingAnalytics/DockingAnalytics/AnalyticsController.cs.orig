@@ -585,7 +585,17 @@ namespace DockingAnalytics
                 highGainZedGraphCurve.Symbol.Size = 5;
                 highGainZedGraphCurve.Label.IsVisible = false;
 
+<<<<<<< HEAD
+                LineItem lowGainZedGraphCurve = dock.ZedGraphControl.GraphPane.AddCurve("USB Low Gain Accel", InformationHolder.LowGainContainer().zedGraphData[GraphListComboBoxIndex], Color.Red, SymbolType.None);
+                lowGainZedGraphCurve.Tag = "USB Low Gain";
+                lowGainZedGraphCurve.Line.Width = 1.5F;
+                lowGainZedGraphCurve.Symbol.Fill = new Fill(Color.White);
+                lowGainZedGraphCurve.Symbol.Size = 5;
+                lowGainZedGraphCurve.Label.IsVisible = false;
 
+
+=======
+>>>>>>> 07168f78d1ce34c0c3f64abb59177b556f425a8d
                 dock.ZedGraphControl.GraphPane.YAxis.Scale.Min = -4096;
                 dock.ZedGraphControl.GraphPane.YAxis.Scale.Max = 4096;
                 dock.ZedGraphControl.GraphPane.XAxis.Scale.Min = 0;
@@ -1039,7 +1049,6 @@ namespace DockingAnalytics
             // If we have more data points than desired, remove them by rolling the window forward.
             if (zedGraphData[graphIndex].Count * AppSettings.ResolutionOfGraph > AppSettings.SecondsToGraphData * AppSettings.SamplingFrequency)
             {
-                // Changes
                 zedGraphData[graphIndex].RemoveAt(0);
             }
 

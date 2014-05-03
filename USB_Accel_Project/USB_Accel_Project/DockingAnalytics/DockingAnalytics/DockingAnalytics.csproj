@@ -68,6 +68,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AccelerationDataConvertor.cs" />
     <Compile Include="AccelerationInfo.cs" />
     <Compile Include="AnalyticsController.cs" />
     <Compile Include="AppSettings.cs" />

@@ -590,11 +590,11 @@ namespace DockingAnalytics
             GraphDock gp = dockPanel1.ActiveDocument as GraphDock;
 
             string adcSampleCaptureFileName = "{0}_GraphData_" + DateTime.Now.ToString("_MM_dd_yyyy_HH_mm_ss") + ".ixs";
-            saveFile(InformationHolder.HighGainContainer().Data, String.Format(adcSampleCaptureFileName, "HighGain_"));
-            saveFile(InformationHolder.LowGainContainer().Data, String.Format(adcSampleCaptureFileName, "LowGain_"));
+            saveFile(InformationHolder.HighGainContainer().Data, String.Format(adcSampleCaptureFileName, "HighGain_"), InformationHolder.HighGainContainer().Gain);
+            saveFile(InformationHolder.LowGainContainer().Data, String.Format(adcSampleCaptureFileName, "LowGain_"), InformationHolder.LowGainContainer().Gain);
         }
 
-        private void saveFile(List<int> data, String filename)
+        private void saveFile(List<int> data, String filename, InformationHolder.GainType gain)
         {
             DockingAnalytics._xmlFile myFile = new DockingAnalytics._xmlFile(filename);
             ArrayList zedDataArrayList = new ArrayList();
@@ -605,6 +605,7 @@ namespace DockingAnalytics
             // Probable solution: Separate save method for a graph without recorded data, and one for a graph with recorded data
             foreach (int datapoint in data)
             {
+                double val = datapoint.ConvertToGs(gain);
                 zedDataArrayList.Add(datapoint);
             }
             //for (int i = 0; i < gp.ZedGraphControl.GraphPane.CurveList[Controller.graphCurveListIndex].Points.Count; i++)
@@ -614,7 +615,7 @@ namespace DockingAnalytics
             myFile.AddAccelerationValues(zedDataArrayList);
             myFile.dsSentry_data.sampling_Freq = DockingAnalytics.GlobalVars.AccelFreq; ;
             //myFile.dsSentry_data.accel_Vg_Calibration = DockingAnalytics.GlobalVars.AccelYScale;
-            myFile.dsSentry_data.offset_Calibration = DockingAnalytics.GlobalVars.AccelYOffset;
+            myFile.dsSentry_data.offset_Calibration = 1;
             //myFile.dsSentry_data.max_Freq_Res = DockingAnalytics.GlobalVars.MaxResFreq;
             //myFile.dsSentry_data.settings_Timestamp_Created = tss;
             //myFile.dsSentry_data.settings_Timestamp_LastEdit = DateTime.Now;
