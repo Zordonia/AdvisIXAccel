@@ -564,8 +564,18 @@ namespace DockingAnalytics
             
             if(dock.ZedGraphControl.GraphPane.CurveList.Count == 0 || graphCurveListIndex > dock.ZedGraphControl.GraphPane.CurveList.Count)
             {
+                dock.ZedGraphControl.GraphPane.CurveList.Clear(); //TODO start fresh?
+
                 InformationHolder.HighGainContainer().zedGraphData.Add(new PointPairList());
                 InformationHolder.LowGainContainer().zedGraphData.Add(new PointPairList());
+
+                //Have "low" = index 0 and "high" = index 1
+                LineItem lowGainZedGraphCurve = dock.ZedGraphControl.GraphPane.AddCurve("USB Low Gain Accel", InformationHolder.LowGainContainer().zedGraphData[GraphListComboBoxIndex], Color.Red, SymbolType.None);
+                lowGainZedGraphCurve.Tag = "USB Low Gain";
+                lowGainZedGraphCurve.Line.Width = 1.5F;
+                lowGainZedGraphCurve.Symbol.Fill = new Fill(Color.White);
+                lowGainZedGraphCurve.Symbol.Size = 5;
+                lowGainZedGraphCurve.Label.IsVisible = false;
 
                 // Set up high gain curve
                 LineItem highGainZedGraphCurve = dock.ZedGraphControl.GraphPane.AddCurve("USB High Gain Accel", InformationHolder.HighGainContainer().zedGraphData[GraphListComboBoxIndex], Color.DeepSkyBlue, SymbolType.None);
@@ -575,13 +585,6 @@ namespace DockingAnalytics
                 highGainZedGraphCurve.Symbol.Size = 5;
                 highGainZedGraphCurve.Label.IsVisible = false;
 
-                LineItem lowGainZedGraphCurve = dock.ZedGraphControl.GraphPane.AddCurve("USB Low Gain Accel", InformationHolder.LowGainContainer().zedGraphData[GraphListComboBoxIndex], Color.Red, SymbolType.None);
-                lowGainZedGraphCurve.Tag = "USB Low Gain";
-                lowGainZedGraphCurve.Line.Width = 1.5F;
-                lowGainZedGraphCurve.Symbol.Fill = new Fill(Color.White);
-                lowGainZedGraphCurve.Symbol.Size = 5;
-                lowGainZedGraphCurve.Label.IsVisible = false;
-
 
                 dock.ZedGraphControl.GraphPane.YAxis.Scale.Min = -4096;
                 dock.ZedGraphControl.GraphPane.YAxis.Scale.Max = 4096;
@@ -590,6 +593,7 @@ namespace DockingAnalytics
                 dock.ZedGraphControl.AxisChange();
             }
 
+            dock.UpdateZedGraphViewThreadSafe(USBController.gain);
             isReading = true;
             if (USBWorkerThread.ThreadState == System.Threading.ThreadState.Stopped)
             {
@@ -614,6 +618,7 @@ namespace DockingAnalytics
 
         public void UpdateUSBGraph()
         {
+
             if (isReading)
             {
                 GraphDock dock = (GraphDock)GraphDockList[GraphListComboBoxIndex];
@@ -621,11 +626,40 @@ namespace DockingAnalytics
                 PointPairList lowGainZedGraphDataList = InformationHolder.LowGainContainer().zedGraphData[GraphListComboBoxIndex];
                 //dock.ZedGraphControl.GraphPane.CurveList[graphCurveListIndex].Points = zedGraphData[graphCurveListIndex];
                 // zedGraphDataList.FilterData(dock.ZedGraphControl.GraphPane, dock.ZedGraphControl.GraphPane.XAxis, dock.ZedGraphControl.GraphPane.YAxis);
-                dock.UpdateZedGraphThreadSafe(InformationHolder.HighGainContainer().zedGraphData[GraphListComboBoxIndex]);
-                dock.UpdateZedGraphThreadSafe(InformationHolder.LowGainContainer().zedGraphData[GraphListComboBoxIndex]);
+
+                //dock.UpdateZedGraphThreadSafe(InformationHolder.HighGainContainer().zedGraphData[GraphListComboBoxIndex]);
+                //dock.UpdateZedGraphThreadSafe(InformationHolder.LowGainContainer().zedGraphData[GraphListComboBoxIndex]);
+
+                //Update which data is viewed based on the radio buttons
+                if (this.USBController.gain == USBControlDock.ChannelGain.Both)
+                {
+                    dock.UpdateZedGraphThreadSafe(InformationHolder.HighGainContainer().zedGraphData[GraphListComboBoxIndex],
+                                                  USBControlDock.ChannelGain.High);
+                    dock.UpdateZedGraphThreadSafe(InformationHolder.LowGainContainer().zedGraphData[GraphListComboBoxIndex],
+                                                  USBControlDock.ChannelGain.Low);
+                }
+                else if (this.USBController.gain == USBControlDock.ChannelGain.High)
+                {
+                    dock.UpdateZedGraphThreadSafe(InformationHolder.HighGainContainer().zedGraphData[GraphListComboBoxIndex],
+                                                    USBControlDock.ChannelGain.High);
+                }
+                else if (this.USBController.gain == USBControlDock.ChannelGain.Low)
+                {
+                    dock.UpdateZedGraphThreadSafe(InformationHolder.LowGainContainer().zedGraphData[GraphListComboBoxIndex],
+                                                    USBControlDock.ChannelGain.Low);
+                }
             }
         }
 
+        public void UpdateUSBGraphGainView(USBControlDock.ChannelGain gainView)
+        {
+            if (GraphDockList.Count > 0)
+            {
+                GraphDock dock = (GraphDock)GraphDockList[GraphListComboBoxIndex];
+                if(dock.ZedGraphControl.GraphPane.CurveList.Count > 0)
+                    dock.UpdateZedGraphViewThreadSafe(gainView);
+            }
+        }
     }
 
 

@@ -521,12 +521,12 @@ namespace DockingAnalytics
 
         }
 
-        public delegate void UpdateZedgraphDelegate(PointPairList data);
-        public void UpdateZedGraphThreadSafe(PointPairList data)
+        public delegate void UpdateZedgraphDelegate(PointPairList data, USBControlDock.ChannelGain gain);
+        public void UpdateZedGraphThreadSafe(PointPairList data, USBControlDock.ChannelGain gain)
         {
             if (this.InvokeRequired)
             {
-                this.Invoke(new UpdateZedgraphDelegate(this.UpdateZedGraphThreadSafe), data);
+                this.Invoke(new UpdateZedgraphDelegate(this.UpdateZedGraphThreadSafe), data, gain);
             }
             else
             {
@@ -535,10 +535,49 @@ namespace DockingAnalytics
                 double min = Double.MaxValue;
                 double max = Double.MinValue;
 
-                CurveItem curve = this.zedGraphControl1.GraphPane.CurveList[0];
+                CurveItem curve;
+                if (gain == USBControlDock.ChannelGain.High)
+                {
+                    curve = this.zedGraphControl1.GraphPane.CurveList[1];
+                }
+                else if (gain == USBControlDock.ChannelGain.Low)
+                {
+                    curve = this.zedGraphControl1.GraphPane.CurveList[0];
+                }
+
+                
                 if (data.Count > this.zedGraphControl1.GraphPane.XAxis.Scale.Max)
                 {
                     this.zedGraphControl1.GraphPane.XAxis.Scale.Max = data.Count + 250000;
+                }
+
+                this.zedGraphControl1.Update();
+                this.Refresh();
+            }
+        }
+
+        public delegate void UpdateZedgraphViewDelegate(USBControlDock.ChannelGain gain);
+        public void UpdateZedGraphViewThreadSafe(USBControlDock.ChannelGain gain)
+        {
+            if (this.InvokeRequired)
+            {
+                this.Invoke(new UpdateZedgraphViewDelegate(this.UpdateZedGraphViewThreadSafe), gain);
+            }
+            else
+            {
+                this.zedGraphControl1.GraphPane.AxisChange();
+
+                CurveItem highCurve = this.zedGraphControl1.GraphPane.CurveList[1];
+                CurveItem lowCurve = this.zedGraphControl1.GraphPane.CurveList[0];
+                if (gain == USBControlDock.ChannelGain.High)
+                {
+                    highCurve.IsVisible = true;
+                    lowCurve.IsVisible = false; 
+                }
+                else if (gain == USBControlDock.ChannelGain.Low)
+                {
+                    highCurve.IsVisible = false;
+                    lowCurve.IsVisible = true;
                 }
 
                 this.zedGraphControl1.Update();
