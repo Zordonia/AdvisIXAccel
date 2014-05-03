@@ -545,6 +545,12 @@ namespace DockingAnalytics
 
         public void USBAnalytics_ReadUSB()
         {
+            if (!USBClassObject.isOpen)
+            {
+                MessageBox.Show("USB must be opened first");
+                return;
+            }
+
             //first make sure there is a curve to add data to
             GraphDock dock = (GraphDock)GraphDockList[GraphListComboBoxIndex];
             graphCurveListIndex = 0;
@@ -585,16 +591,16 @@ namespace DockingAnalytics
                 highGainZedGraphCurve.Symbol.Size = 5;
                 highGainZedGraphCurve.Label.IsVisible = false;
 
-
-                dock.ZedGraphControl.GraphPane.YAxis.Scale.Min = -4096;
-                dock.ZedGraphControl.GraphPane.YAxis.Scale.Max = 4096;
-                dock.ZedGraphControl.GraphPane.XAxis.Scale.Min = 0;
-                dock.ZedGraphControl.GraphPane.XAxis.Scale.Max = 500000;
+                //dock.ZedGraphControl.GraphPane.YAxis.Scale.Min = -66000;
+                //dock.ZedGraphControl.GraphPane.YAxis.Scale.Max = 66000;
+                dock.ZedGraphControl.GraphPane.XAxis.Scale.MinAuto = true;
+                dock.ZedGraphControl.GraphPane.XAxis.Scale.MaxAuto = true;
                 dock.ZedGraphControl.AxisChange();
             }
 
             dock.UpdateZedGraphViewThreadSafe(USBController.gain);
             isReading = true;
+
             if (USBWorkerThread.ThreadState == System.Threading.ThreadState.Stopped)
             {
                 USBWorkerThread = new Thread(new ThreadStart(USBClassObject.StartReading));
@@ -824,8 +830,11 @@ namespace DockingAnalytics
             UsbDevice.Exit();
         }
 
+
+        int ch1SampleCounter = 0, ch2SampleCounter = 0;
         public void StartReading()
         {
+            bool channelOne;
             ErrorCode ec = new ErrorCode();
             try
             {
@@ -864,8 +873,10 @@ namespace DockingAnalytics
 
                     uint toggle = 0;
                     // Show some information on the completed transfer.
+                    
                     seed = 0;
-                    for (i = 0; i < handle.Data.Length; i += 2)
+                    channelOne = false;
+                    /*for (i = 0; i < handle.Data.Length; i += 2)
                     {
                         toggle++;
                         if (toggle % 2 == 0)
@@ -889,7 +900,49 @@ namespace DockingAnalytics
                             i += 100;
                             seed = i + 2;
                         }
+                    }*/
+
+                    int ch1Counter = 0, ch2Counter = 0;
+                    for (i = 0; i < handle.Data.Length; i += 2)
+                    {
+                        if (channelOne)
+                        {
+                            InformationHolder.HighGainContainer().Add(Controller.GraphListComboBoxIndex, ch1SampleCounter++, (Int16)((handle.Data[i]) + (handle.Data[i + 1] << 8)));
+                            ch1Counter+=2;
+                        }
+                        else
+                        {
+                            InformationHolder.LowGainContainer().Add(Controller.GraphListComboBoxIndex, ch2SampleCounter++, (Int16)((handle.Data[i]) + (handle.Data[i + 1] << 8)));
+                            ch2Counter+=2;
+                        }
+
+                        if (ch1Counter == 96)
+                        {
+                            ch1Counter = 0;
+                            channelOne = !channelOne;
+                        }
+                        if (ch2Counter == 96)
+                        {
+                            ch2Counter = 0;
+                            channelOne = !channelOne;
+                            i += 4;
+                        }
+                        /*
+                        //Only read one channel
+                        if (i == seed + 94)
+                        {
+                            channelOne = !channelOne;
+                            seed = i + 2;
+                            if (!channelOne)
+                            {
+                                i += 100;
+                                seed = i + 2;
+                            }
+                        }*/
                     }
+
+
+
                 } while (!_shouldStopUSB);
 
                 //Send Parsed Data to MainForm

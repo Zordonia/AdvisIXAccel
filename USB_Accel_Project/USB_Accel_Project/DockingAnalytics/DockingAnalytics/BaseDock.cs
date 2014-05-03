@@ -606,7 +606,7 @@ namespace DockingAnalytics
             foreach (int datapoint in data)
             {
                 double val = datapoint.ConvertToGs(gain);
-                zedDataArrayList.Add(datapoint);
+                zedDataArrayList.Add(val);
             }
             //for (int i = 0; i < gp.ZedGraphControl.GraphPane.CurveList[Controller.graphCurveListIndex].Points.Count; i++)
             //{
