@@ -122,6 +122,11 @@ namespace DockingAnalytics
             {
                 this.gain = ChannelGain.Both;
             }
+
+            if (Controller != null)
+            {
+                this.Controller.UpdateUSBGraphGainView(gain);
+            }
         }
     }
 }
