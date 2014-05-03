@@ -619,6 +619,7 @@ namespace DockingAnalytics
                 IEnumerator<decimal> acEnum = dsSentry_data.values.GetEnumerator();
                 while (acEnum.MoveNext())
                 {
+                    // Here do conversion
                     double val = (double)(acEnum.Current / (decimal)accYScale);
                     writer.WriteValue(val.ToString() + "\r\n"); // To write with current scale
                     // If you want to write the "scaled" value, i.e. the actual value in g's, must set acc_YScale to 1
