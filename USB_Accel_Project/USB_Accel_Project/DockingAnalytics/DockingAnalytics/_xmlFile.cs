@@ -77,7 +77,7 @@ namespace DockingAnalytics
                 {
                     int g = (int)q;
                     //Console.WriteLine(Convert.ToDouble(sepVals[g]));
-                    dcmACCVals[g] = Convert.ToDecimal(sepVals[g]) * (decimal)accYScale + (decimal)accYOffset;
+                    dcmACCVals[g] = (decimal)Convert.ToDouble(sepVals[g]) * (decimal)accYScale + (decimal)accYOffset;
                     floatAcclVals[g] = Math.Abs((float)dcmACCVals[g] * (float)accYScale + (float)accYOffset);
                     Alist.Add(ffreq * accXScale, Convert.ToDouble(sepVals[g]) * accYScale + accYOffset);
                 }

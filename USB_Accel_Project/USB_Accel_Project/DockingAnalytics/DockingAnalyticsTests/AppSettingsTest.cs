@@ -19,12 +19,12 @@ namespace DockingAnalytics
             Assert.AreEqual(42438, AppSettings.SamplingFrequency);
             Assert.AreEqual(1, AppSettings.SecondsToSaveData);
             Assert.AreEqual(10, AppSettings.SecondsToGraphData);
-            Assert.AreEqual(1, AppSettings.HighGain);
-            Assert.AreEqual(2, AppSettings.LowGain);
-            Assert.AreEqual(3, AppSettings.SensorSensitivity);
-            Assert.AreEqual(4, AppSettings.ADCFullScaleRange);
-            Assert.AreEqual(5, AppSettings.FeedbackCapacitance);
-            Assert.AreEqual(6, AppSettings.NumberOfBits);
+            Assert.AreEqual(250, AppSettings.HighGain);
+            Assert.AreEqual(0.238, AppSettings.LowGain);
+            Assert.AreEqual(100, AppSettings.SensorSensitivity);
+            Assert.AreEqual(3.9, AppSettings.ADCFullScaleRange);
+            Assert.AreEqual(100000, AppSettings.FeedbackCapacitance);
+            Assert.AreEqual(16, AppSettings.NumberOfBits);
         }
 
         private void testValuesCanChange()

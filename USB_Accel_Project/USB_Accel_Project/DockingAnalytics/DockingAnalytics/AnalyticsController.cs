@@ -830,6 +830,8 @@ namespace DockingAnalytics
             UsbDevice.Exit();
         }
 
+
+        int ch1SampleCounter = 0, ch2SampleCounter = 0;
         public void StartReading()
         {
             bool channelOne;
@@ -857,7 +859,7 @@ namespace DockingAnalytics
 
 
                 int seed;
-                int i;
+                int i = AppSettings.InitialHeader;
                 do
                 {
                     UsbTransferQueue.Handle handle;
@@ -905,28 +907,26 @@ namespace DockingAnalytics
                     {
                         if (channelOne)
                         {
-                            InformationHolder.HighGainContainer().Add(Controller.GraphListComboBoxIndex, (Int32)Controller.graphXIndex++, (Int16)((handle.Data[i]) + (handle.Data[i + 1] << 8)));
-                            ch1Counter++;
+                            InformationHolder.HighGainContainer().Add(Controller.GraphListComboBoxIndex, ch1SampleCounter++, (Int16)((handle.Data[i]) + (handle.Data[i + 1] << 8)));
+                            ch1Counter+=2;
                         }
                         else
                         {
-                            InformationHolder.LowGainContainer().Add(Controller.GraphListComboBoxIndex, (Int32)Controller.graphXIndex++, (Int16)((handle.Data[i]) + (handle.Data[i + 1] << 8)));
-                            ch2Counter++;
+                            InformationHolder.LowGainContainer().Add(Controller.GraphListComboBoxIndex, ch2SampleCounter++, (Int16)((handle.Data[i]) + (handle.Data[i + 1] << 8)));
+                            ch2Counter+=2;
                         }
 
-                        if (ch1Counter == 48)
+                        if (ch1Counter == AppSettings.ChannelOneOffset)
                         {
                             ch1Counter = 0;
                             channelOne = !channelOne;
-                            if (handle.Data[i + 2] == 0 && handle.Data[i + 3] == 0 && handle.Data[i + 4] == 0 && handle.Data[i + 5] == 0)
-                                i += 4;
+                            i += AppSettings.ChannelTwoHeader;
                         }
-                        if (ch2Counter == 48)
+                        if (ch2Counter == AppSettings.ChannelTwoOffset)
                         {
                             ch2Counter = 0;
                             channelOne = !channelOne;
-                            if (handle.Data[i + 2] == 0 && handle.Data[i + 3] == 0 && handle.Data[i + 4] == 0 && handle.Data[i + 5] == 0)
-                                i += 4;
+                            i += AppSettings.ChannelOneHeader;
                         }
                         /*
                         //Only read one channel
