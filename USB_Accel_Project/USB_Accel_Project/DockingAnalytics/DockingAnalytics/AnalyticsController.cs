@@ -774,7 +774,7 @@ namespace DockingAnalytics
                     if (!wholeUsbDevice.ClaimInterface(usbInterfaceInfo.Descriptor.InterfaceID))
                         throw new Exception("Failed to claim interface 2.");
 
-                    if (!wholeUsbDevice.SetAltInterface(2))
+                    if (!wholeUsbDevice.SetAltInterface(1))
                         throw new Exception("Failed to set alternate interface.");
                 }
 
@@ -914,16 +914,19 @@ namespace DockingAnalytics
                             ch2Counter++;
                         }
 
-                        if (ch1Counter == 96)
+                        if (ch1Counter == 48)
                         {
                             ch1Counter = 0;
                             channelOne = !channelOne;
+                            if (handle.Data[i + 2] == 0 && handle.Data[i + 3] == 0 && handle.Data[i + 4] == 0 && handle.Data[i + 5] == 0)
+                                i += 4;
                         }
-                        if (ch2Counter == 96)
+                        if (ch2Counter == 48)
                         {
                             ch2Counter = 0;
                             channelOne = !channelOne;
-                            i += 4;
+                            if (handle.Data[i + 2] == 0 && handle.Data[i + 3] == 0 && handle.Data[i + 4] == 0 && handle.Data[i + 5] == 0)
+                                i += 4;
                         }
                         /*
                         //Only read one channel
