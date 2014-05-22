@@ -112,7 +112,7 @@ namespace DockingAnalytics
         {
             get
             {
-                getAppSetting("HighGain", ref highGain);
+                getAppSettingDouble("HighGain", ref highGain);
                 return highGain.Value;
             }
             set
@@ -129,7 +129,7 @@ namespace DockingAnalytics
         {
             get
             {
-                getAppSetting("LowGain", ref lowGain);
+                getAppSettingDouble("LowGain", ref lowGain);
                 return lowGain.Value;
             }
             set
@@ -146,7 +146,7 @@ namespace DockingAnalytics
         {
             get
             {
-                getAppSetting("SensorSensitivity", ref sSensitivity);
+                getAppSettingDouble("SensorSensitivity", ref sSensitivity);
                 return sSensitivity.Value;
             }
             set
@@ -163,7 +163,7 @@ namespace DockingAnalytics
         {
             get
             {
-                getAppSetting("ADCFullScaleRange", ref adcFullScaleRange);
+                getAppSettingDouble("ADCFullScaleRange", ref adcFullScaleRange);
                 return adcFullScaleRange.Value;
             }
             set
@@ -180,7 +180,7 @@ namespace DockingAnalytics
         {
             get
             {
-                getAppSetting("FeedbackCapacitance", ref feedbackCapacitance);
+                getAppSettingDouble("FeedbackCapacitance", ref feedbackCapacitance);
                 return feedbackCapacitance.Value;
             }
             set
@@ -197,7 +197,7 @@ namespace DockingAnalytics
         {
             get
             {
-                getAppSetting("NumberOfBits", ref numBits);
+                getAppSettingDouble("NumberOfBits", ref numBits);
                 return numBits.Value;
             }
             set
@@ -206,7 +206,7 @@ namespace DockingAnalytics
             }
         }
         static double? numBits;
-
+        
         /// <summary>
         /// The LSB value.
         /// </summary>
@@ -214,7 +214,7 @@ namespace DockingAnalytics
         {
             get
             {
-                getAppSetting("LSBValue", ref lsbValue);
+                getAppSettingDouble("LSBValue", ref lsbValue);
                 return lsbValue.Value;
             }
             set
@@ -224,12 +224,109 @@ namespace DockingAnalytics
         }
         static double? lsbValue;
 
-        static void getAppSetting(String appSetting, ref double? value)
+        /// <summary>
+        /// The First Channels Offset value.
+        /// </summary>
+        public static int ChannelOneOffset
+        {
+            get
+            {
+                getAppSettingInt("ChannelOneOffset", ref channelOneOffset);
+                return channelOneOffset.Value;
+            }
+            set
+            {
+                channelOneOffset = value;
+            }
+        }
+        static int? channelOneOffset;
+        
+        /// <summary>
+        /// The Second Channels Offset value.
+        /// </summary>
+        public static int ChannelTwoOffset
+        {
+            get
+            {
+                getAppSettingInt("ChannelTwoOffset", ref channelTwoOffset);
+                return channelTwoOffset.Value;
+            }
+            set
+            {
+                channelTwoOffset = value;
+            }
+        }
+        static int? channelTwoOffset;
+
+        /// <summary>
+        /// The First Channels Header value.
+        /// </summary>
+        public static int ChannelOneHeader
+        {
+            get
+            {
+                getAppSettingInt("ChannelOneHeader", ref channelOneHeader);
+                return channelOneHeader.Value;
+            }
+            set
+            {
+                channelOneHeader = value;
+            }
+        }
+        static int? channelOneHeader;
+        
+        /// <summary>
+        /// The First Channels Header value.
+        /// </summary>
+        public static int ChannelTwoHeader
+        {
+            get
+            {
+                getAppSettingInt("ChannelTwoHeader", ref channelTwoHeader);
+                return channelTwoHeader.Value;
+            }
+            set
+            {
+                channelTwoHeader = value;
+            }
+        }
+        static int? channelTwoHeader;
+        
+        /// <summary>
+        /// The Initial Header value.
+        /// </summary>
+        public static int InitialHeader
+        {
+            get
+            {
+                getAppSettingInt("InitialHeader", ref initHeader);
+                return initHeader.Value;
+            }
+            set
+            {
+                initHeader = value;
+            }
+        }
+        static int? initHeader;
+
+        static void getAppSettingDouble(String appSetting, ref double? value)
         {
             double val;
             if (!value.HasValue)
             {
                 if (double.TryParse(ConfigurationManager.AppSettings[appSetting], out val))
+                {
+                    value = val;
+                }
+            }
+        }
+        
+        static void getAppSettingInt(String appSetting, ref int? value)
+        {
+            int val;
+            if (!value.HasValue)
+            {
+                if (int.TryParse(ConfigurationManager.AppSettings[appSetting], out val))
                 {
                     value = val;
                 }

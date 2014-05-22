@@ -859,7 +859,7 @@ namespace DockingAnalytics
 
 
                 int seed;
-                int i;
+                int i = AppSettings.InitialHeader;
                 do
                 {
                     UsbTransferQueue.Handle handle;
@@ -916,16 +916,17 @@ namespace DockingAnalytics
                             ch2Counter+=2;
                         }
 
-                        if (ch1Counter == 96)
+                        if (ch1Counter == AppSettings.ChannelOneOffset)
                         {
                             ch1Counter = 0;
                             channelOne = !channelOne;
+                            i += AppSettings.ChannelTwoHeader;
                         }
-                        if (ch2Counter == 96)
+                        if (ch2Counter == AppSettings.ChannelTwoOffset)
                         {
                             ch2Counter = 0;
                             channelOne = !channelOne;
-                            i += 4;
+                            i += AppSettings.ChannelOneHeader;
                         }
                         /*
                         //Only read one channel
