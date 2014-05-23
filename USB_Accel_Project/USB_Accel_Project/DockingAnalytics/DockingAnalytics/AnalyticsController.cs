@@ -902,8 +902,19 @@ namespace DockingAnalytics
                         }
                     }*/
 
+                    int footerCheck= 0;
+                    if (handle.Data.Length > 102)
+                    {
+                        footerCheck = handle.Data[96] + handle.Data[97] + handle.Data[98] + handle.Data[99];
+                    }
+                    if (footerCheck == 0)
+                    {
+                        channelOne = false;
+                    }
+
+
                     int ch1Counter = 0, ch2Counter = 0;
-                    for (i = 0; i < handle.Data.Length; i += 2)
+                    for (i = AppSettings.InitialHeader; i < handle.Data.Length; i += 2)
                     {
                         if (channelOne)
                         {

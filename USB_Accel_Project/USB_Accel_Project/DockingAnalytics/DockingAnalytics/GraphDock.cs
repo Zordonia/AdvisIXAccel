@@ -212,6 +212,7 @@ namespace DockingAnalytics
             }
         }
 
+        private bool toggle = false;
 
         new public void AddCurve(CurveInfo ci, String curveName)
         {
@@ -219,6 +220,15 @@ namespace DockingAnalytics
             //CurveObject co = new CurveObject((((PointPairList)curve.Points).ToSlice(0, 0.010).Stretch(GlobalVars.XACTMAX)), 0);
             //this.zedGraphControl1.GraphPane.AddCurve("NONE", co.PointPairList, Color.Red, SymbolType.Circle);
             this.zedGraphControl1.GraphPane.CurveList.Add(ci.Curve);
+            if (toggle)
+            {
+                ci.Color = Color.Red;
+            }
+            else
+            {
+                ci.Color = Color.Green;
+            }
+            toggle = !toggle;
             base.AddCurve(ci, curveName);
             AddMenuItem(ci.Curve, ci.Type, curveName);
 
