@@ -875,7 +875,7 @@ namespace DockingAnalytics
                     // Show some information on the completed transfer.
                     
                     seed = 0;
-                    channelOne = false;
+                    channelOne = true;
                     /*for (i = 0; i < handle.Data.Length; i += 2)
                     {
                         toggle++;
@@ -906,15 +906,17 @@ namespace DockingAnalytics
                     if (handle.Data.Length > 102)
                     {
                         footerCheck = handle.Data[96] + handle.Data[97] + handle.Data[98] + handle.Data[99];
+                        //footerCheck = 0;
                     }
                     if (footerCheck == 0)
                     {
+                        i = 100;
                         channelOne = false;
                     }
-
+                    bool once = false;
 
                     int ch1Counter = 0, ch2Counter = 0;
-                    for (i = AppSettings.InitialHeader; i < handle.Data.Length; i += 2)
+                    for (i = i == 0 ? AppSettings.InitialHeader : i; i < handle.Data.Length && !once; i += 2)
                     {
                         if (channelOne)
                         {
@@ -932,6 +934,7 @@ namespace DockingAnalytics
                             ch1Counter = 0;
                             channelOne = !channelOne;
                             i += AppSettings.ChannelTwoHeader;
+                            //once = true;
                         }
                         if (ch2Counter == AppSettings.ChannelTwoOffset)
                         {
@@ -952,7 +955,7 @@ namespace DockingAnalytics
                             }
                         }*/
                     }
-
+                    _shouldStopUSB = true;
 
 
                 } while (!_shouldStopUSB);
@@ -1096,9 +1099,10 @@ namespace DockingAnalytics
         public void Add(int graphIndex, int x, int y)
         {
             if (AppSettings.ResolutionOfGraph <= 0) { AppSettings.ResolutionOfGraph = 1; }
+            double value = y.ConvertToGs(this.Gain);
             if (totalCount % AppSettings.ResolutionOfGraph == 0)
             {
-                zedGraphData[graphIndex].Add(x, y);
+                zedGraphData[graphIndex].Add(x, value);
             }
 
             // If we have more data points than desired, remove them by rolling the window forward.
