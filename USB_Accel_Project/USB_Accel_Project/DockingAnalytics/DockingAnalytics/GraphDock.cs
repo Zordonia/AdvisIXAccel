@@ -589,6 +589,11 @@ namespace DockingAnalytics
                     highCurve.IsVisible = false;
                     lowCurve.IsVisible = true;
                 }
+                else if (gain == USBControlDock.ChannelGain.Both)
+                {
+                    highCurve.IsVisible = true;
+                    lowCurve.IsVisible = true;
+                }
 
                 this.zedGraphControl1.Update();
                 this.Refresh();

@@ -31,8 +31,8 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.treeView1 = new System.Windows.Forms.TreeView();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
-            this.btnCreate = new System.Windows.Forms.Button();
             this.btnCombine = new System.Windows.Forms.Button();
+            this.btnCreate = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -85,17 +85,6 @@
             this.splitContainer2.SplitterDistance = 97;
             this.splitContainer2.TabIndex = 0;
             // 
-            // btnCreate
-            // 
-            this.btnCreate.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.btnCreate.Location = new System.Drawing.Point(0, 68);
-            this.btnCreate.Name = "btnCreate";
-            this.btnCreate.Size = new System.Drawing.Size(97, 63);
-            this.btnCreate.TabIndex = 0;
-            this.btnCreate.Text = "New 2D Graph";
-            this.btnCreate.UseVisualStyleBackColor = true;
-            this.btnCreate.Click += new System.EventHandler(this.CreateButtonClicked);
-            // 
             // btnCombine
             // 
             this.btnCombine.Dock = System.Windows.Forms.DockStyle.Top;
@@ -105,11 +94,23 @@
             this.btnCombine.TabIndex = 0;
             this.btnCombine.Text = "New 3D Graph";
             this.btnCombine.UseVisualStyleBackColor = true;
+            this.btnCombine.Visible = false;
             this.btnCombine.Click += new System.EventHandler(this.CombineButtonClicked);
+            // 
+            // btnCreate
+            // 
+            this.btnCreate.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.btnCreate.Location = new System.Drawing.Point(0, 68);
+            this.btnCreate.Name = "btnCreate";
+            this.btnCreate.Size = new System.Drawing.Size(97, 63);
+            this.btnCreate.TabIndex = 0;
+            this.btnCreate.Text = "New Graph";
+            this.btnCreate.UseVisualStyleBackColor = true;
+            this.btnCreate.Click += new System.EventHandler(this.CreateButtonClicked);
             // 
             // ExplorerDock
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(196, 657);
             this.Controls.Add(this.splitContainer1);

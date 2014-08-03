@@ -116,7 +116,7 @@ namespace DockingAnalytics
             if (FFT.IsPowerOfTwo(dcmFFTAnswers.Length/2))
             {
                 decimal d = DockingAnalytics.FFT.test(dcmFFTAnswers);
-                Console.WriteLine("THIS IS THE TEST RESULT!!!: " + d);
+
                 FFT.transform(dcmFFTAnswers);
                 dcmFFTMag = new decimal[AccelerationData.Values.Count /2];
             }
@@ -126,8 +126,7 @@ namespace DockingAnalytics
                 int n = FFT.NextPowerOfTwo(dcmFFTAnswers.Length);
                 //int n = FFT.NextPowerOfTwo(dcmFFTAnswers.Length );
                 dcmFFTAnswers = FFT.PadWithZeros(dcmFFTAnswers, n);
-                decimal d = DockingAnalytics.FFT.test(dcmFFTAnswers);
-                Console.WriteLine("THIS IS THE TEST RESULT!!!: " + d);
+
                 FFT.transform(dcmFFTAnswers);
                 dcmFFTMag = new decimal[n/4];
             }

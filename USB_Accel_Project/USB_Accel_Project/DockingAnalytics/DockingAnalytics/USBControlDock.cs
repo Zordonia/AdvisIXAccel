@@ -26,6 +26,7 @@ namespace DockingAnalytics
         {
             InitializeComponent();
             SenseUnitsComboBox.SelectedIndex = 0;
+            comboBox1.SelectedIndex = 0;
             this.gain = ChannelGain.High;
             HighGainRadioButton.Checked = true;
             LowGainRadioButton.Checked = false;
@@ -126,6 +127,28 @@ namespace DockingAnalytics
             if (Controller != null)
             {
                 this.Controller.UpdateUSBGraphGainView(gain);
+            }
+        }
+
+        private void sensorCapacitanceTextBoxChanged(object sender, EventArgs e)
+        {
+            double value = AppSettings.SensorCapacitance;
+            var textBox = sender as TextBox;
+
+            if (textBox != null && double.TryParse(textBox.Text, out value))
+            {
+                AppSettings.SensorCapacitance = value;
+            }
+        }
+
+        private void sensorSensitivityTextBoxChanged(object sender, EventArgs e)
+        {
+            double value = AppSettings.SensorSensitivity;
+            var textBox = sender as TextBox;
+
+            if (textBox != null && double.TryParse(textBox.Text, out value))
+            {
+                AppSettings.SensorSensitivity = value;
             }
         }
     }

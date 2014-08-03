@@ -13,7 +13,7 @@ namespace DockingAnalytics
         /// <summary>
         /// accel_Freq updated as of 06.06.12
         /// </summary>
-        private static double accel_Freq = 42438.55; //44000;// 16500; // Was 44000 (Changed according to clock cycle time)
+        private static double accel_Freq = AppSettings.SamplingFrequency; // 42438.55; //44000;// 16500; // Was 44000 (Changed according to clock cycle time)
         private static double acc_YScale = (1.5 * 2) / 4096; // To get to v's
         private static double acc_YOffset = ((1.5 * 100 * 2) / 4096) * 4096 / 2; // To get offset
         private static double max_res_freq = 10000;

@@ -35,14 +35,14 @@ namespace DockingAnalytics
         /// <summary>
         /// How many seconds of data to save (based on sampling frequency)
         /// </summary>
-        public static int SecondsToSaveData
+        public static double SecondsToSaveData
         {
             get
             {
                 if (!secondsToSave.HasValue)
                 {
-                    int tmp = 0;
-                    if (int.TryParse(ConfigurationManager.AppSettings["SecondsToSaveData"], out tmp))
+                    double tmp = 0;
+                    if (double.TryParse(ConfigurationManager.AppSettings["SecondsToSaveData"], out tmp))
                     {
                         secondsToSave = tmp;
                     }
@@ -54,19 +54,19 @@ namespace DockingAnalytics
                 secondsToSave = value;
             }
         }
-        static int? secondsToSave;
+        static double? secondsToSave;
 
         /// <summary>
         /// How many seconds of data to graph (based on sampling frequency)
         /// </summary>
-        public static int SecondsToGraphData
+        public static double SecondsToGraphData
         {
             get
             {
                 if (!secondsToGraph.HasValue)
                 {
-                    int tmp = 0;
-                    if (int.TryParse(ConfigurationManager.AppSettings["SecondsToGraphData"], out tmp))
+                    double tmp = 0;
+                    if (double.TryParse(ConfigurationManager.AppSettings["SecondsToGraphData"], out tmp))
                     {
                         secondsToGraph = tmp;
                     }
@@ -78,7 +78,7 @@ namespace DockingAnalytics
                 secondsToGraph = value;
             }
         }
-        static int? secondsToGraph;
+        static double? secondsToGraph;
             
         
         /// <summary>
@@ -189,6 +189,20 @@ namespace DockingAnalytics
             }
         }
         static double? feedbackCapacitance;
+
+        public static double SensorCapacitance
+        {
+            get
+            {
+                getAppSettingDouble("SensorCapacitance", ref sensorCapacitance);
+                return sensorCapacitance.Value;
+            }
+            set
+            {
+                sensorCapacitance = value;
+            }
+        }
+        static double? sensorCapacitance;
 
         /// <summary>
         /// The number of bits.

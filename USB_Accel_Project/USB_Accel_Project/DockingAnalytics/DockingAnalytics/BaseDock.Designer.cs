@@ -1157,8 +1157,8 @@
             this.Controls.Add(this.menuStrip1);
             this.IsMdiContainer = true;
             this.MainMenuStrip = this.menuStrip1;
-            this.Name = "BaseDock";
-            this.Text = "BaseDock";
+            this.Name = "USB Accel";
+            this.Text = "USB Accel";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.BaseDock_FormClosing);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();

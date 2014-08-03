@@ -147,8 +147,8 @@ namespace DockingAnalytics
             //UpdateGraphMainView.Close();
             UpdateGraphMainView.Register(activeGraphDock);
             UpdateGraphMainView.UpdateView();
-            
-            //MainDockingForm.Update(UpdateGraphMainView, DockState.DockBottom);
+
+            MainDockingForm.Update(UpdateGraphMainView, DockState.DockBottom);
             Console.WriteLine("Active Document Changed");
         }
 
@@ -545,6 +545,10 @@ namespace DockingAnalytics
 
         public void USBAnalytics_ReadUSB()
         {
+            if (USBClassObject == null)
+            {
+                USBAnalytics_OpenUSB();
+            }
             if (!USBClassObject.isOpen)
             {
                 MessageBox.Show("USB must be opened first");
@@ -554,8 +558,8 @@ namespace DockingAnalytics
             //first make sure there is a curve to add data to
             GraphDock dock = (GraphDock)GraphDockList[GraphListComboBoxIndex];
             graphCurveListIndex = 0;
-            dock.ZedGraphControl.GraphPane.XAxis.Title.Text = "Number of Samples";
-            dock.ZedGraphControl.GraphPane.YAxis.Title.Text = "Digital Acceleration Number";
+            dock.ZedGraphControl.GraphPane.XAxis.Title.Text = "Sample Number";
+            dock.ZedGraphControl.GraphPane.YAxis.Title.Text = "Acceleration";
             if (dock.ZedGraphControl.GraphPane.CurveList.Count > 0)
             {
                 foreach (CurveItem curve in dock.ZedGraphControl.GraphPane.CurveList)
@@ -858,8 +862,6 @@ namespace DockingAnalytics
                                                                         usbEndpointInfo.Descriptor.MaxPacketSize);
 
 
-                int seed;
-                int i = AppSettings.InitialHeader;
                 do
                 {
                     UsbTransferQueue.Handle handle;
@@ -871,53 +873,31 @@ namespace DockingAnalytics
                     if (ec != ErrorCode.Success)
                         throw new Exception("Failed getting async result: " + ec.ToString());
 
-                    uint toggle = 0;
                     // Show some information on the completed transfer.
-                    
+
+                    int seed;
+                    int i = AppSettings.InitialHeader;
                     seed = 0;
                     channelOne = true;
-                    /*for (i = 0; i < handle.Data.Length; i += 2)
+
+                    int footerCheck = 0;
+                    for (int j = 192; j < handle.Data.Length + 3; j+=196)
                     {
-                        toggle++;
-                        if (toggle % 2 == 0)
-                        {
-                            toggle = 0; 
-                            InformationHolder.HighGainContainer().Add(Controller.GraphListComboBoxIndex, (Int32)Controller.graphXIndex++, (Int16)((handle.Data[i]) + (handle.Data[i + 1] << 8)));
-
-                        }
-                        else
-                        {
-                            InformationHolder.LowGainContainer().Add(Controller.GraphListComboBoxIndex, (Int32)Controller.graphXIndex++, (Int16)((handle.Data[i]) + (handle.Data[i + 1] << 8)));
-
-                        }
-                        //InformationHolder.Instance().zedGraphData[graphList.Add(Controller.graphXIndex++, (Int16)((handle.Data[i]) + (handle.Data[i + 1] << 8)));
-                        // InformationHolder.Instance().zedGraphData[Controller.GraphListComboBoxIndex].Add(Controller.graphXIndex++, (Int16)((handle.Data[i]) + (handle.Data[i + 1] << 8)));
-                        //writer.Write((Int16)((rawAccelData[i]) + (rawAccelData[i + 1] << 8)) + ",");
-
-                        //Only read one channel
-                        if (i == seed + 94)
-                        {
-                            i += 100;
-                            seed = i + 2;
-                        }
-                    }*/
-
-                    int footerCheck= 0;
-                    if (handle.Data.Length > 102)
-                    {
-                        footerCheck = handle.Data[96] + handle.Data[97] + handle.Data[98] + handle.Data[99];
-                        //footerCheck = 0;
+                        footerCheck += handle.Data[j] + handle.Data[j + 1] + handle.Data[j + 2] + handle.Data[j + 3];
                     }
-                    if (footerCheck == 0)
-                    {
-                        i = 100;
-                        channelOne = false;
-                    }
-                    bool once = false;
+                    // We've seen the four byte 0 delimiters start at byte 48 and at byte 96. This should reasonably detect where.
+                    bool delimAt96 = footerCheck == 0;
+
 
                     int ch1Counter = 0, ch2Counter = 0;
-                    for (i = i == 0 ? AppSettings.InitialHeader : i; i < handle.Data.Length && !once; i += 2)
+                    for (i = AppSettings.InitialHeader; i < handle.Data.Length; i += 2)
                     {
+                        if (i != 0 && ((delimAt96 && i % 192 == 0) || (!delimAt96 && (i + 48 * 2) % 192 == 0) || (!delimAt96 && i == 48 * 2)))
+                        {
+                            i += 4;
+                            break;
+                        }
+
                         if (channelOne)
                         {
                             InformationHolder.HighGainContainer().Add(Controller.GraphListComboBoxIndex, ch1SampleCounter++, (Int16)((handle.Data[i]) + (handle.Data[i + 1] << 8)));
@@ -934,7 +914,6 @@ namespace DockingAnalytics
                             ch1Counter = 0;
                             channelOne = !channelOne;
                             i += AppSettings.ChannelTwoHeader;
-                            //once = true;
                         }
                         if (ch2Counter == AppSettings.ChannelTwoOffset)
                         {
@@ -942,20 +921,8 @@ namespace DockingAnalytics
                             channelOne = !channelOne;
                             i += AppSettings.ChannelOneHeader;
                         }
-                        /*
-                        //Only read one channel
-                        if (i == seed + 94)
-                        {
-                            channelOne = !channelOne;
-                            seed = i + 2;
-                            if (!channelOne)
-                            {
-                                i += 100;
-                                seed = i + 2;
-                            }
-                        }*/
                     }
-                    _shouldStopUSB = true;
+                    //_shouldStopUSB = true;
 
 
                 } while (!_shouldStopUSB);
@@ -975,6 +942,11 @@ namespace DockingAnalytics
             }
             _shouldStopUSB = false;
             Thread.CurrentThread.Abort();
+        }
+
+        public void ProcessUSBData()
+        {
+
         }
 
         public void RequestStop()
@@ -1091,7 +1063,7 @@ namespace DockingAnalytics
             if (lowGainSingleton == null)
             {
                 lowGainSingleton = new InformationHolder();
-                highGainSingleton.Gain = GainType.HighGain;
+                lowGainSingleton.Gain = GainType.LowGain;
             }
             return lowGainSingleton;
         }
@@ -1117,7 +1089,7 @@ namespace DockingAnalytics
             Data.Add(y);
 
             // If we have more recored more data than we want, roll the window forward by removing stale data.
-            if (Data.Count > AppSettings.SecondsToSaveData * AppSettings.SamplingFrequency)
+            if (Data.Count > 1024) // AppSettings.SecondsToSaveData * AppSettings.SamplingFrequency)
             {
                 Data.RemoveAt(0);
                 totalCount = 0;

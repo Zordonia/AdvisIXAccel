@@ -20,15 +20,17 @@ namespace DockingAnalytics
                     gfValue = AppSettings.HighGain;
                     break;
                 default: // Default case should never be hit
+                    throw new ArgumentNullException();
                 case InformationHolder.GainType.LowGain:
                     gfValue = AppSettings.LowGain;
                     break;
             }
             // VSensor
-            var vSensor = vADC / gfValue;
+            var vSensor = vADC / gfValue / (AppSettings.SensorCapacitance / AppSettings.FeedbackCapacitance);
 
             // gADC
-            var gADC = vSensor / AppSettings.SensorSensitivity;
+            //var gADC = vSensor / AppSettings.SensorSensitivity;
+            var gADC = vSensor;
             return gADC;
         }
     }
