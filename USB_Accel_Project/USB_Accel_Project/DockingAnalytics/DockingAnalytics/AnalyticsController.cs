@@ -1089,7 +1089,7 @@ namespace DockingAnalytics
             Data.Add(y);
 
             // If we have more recored more data than we want, roll the window forward by removing stale data.
-            if (Data.Count > 1024) // AppSettings.SecondsToSaveData * AppSettings.SamplingFrequency)
+            if (Data.Count > AppSettings.SecondsToSaveData * AppSettings.SamplingFrequency)
             {
                 Data.RemoveAt(0);
                 totalCount = 0;
