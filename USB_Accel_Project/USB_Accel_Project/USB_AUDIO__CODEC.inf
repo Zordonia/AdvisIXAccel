@@ -22,7 +22,7 @@ Provider    = %VendorName%
 CatalogFile = USB_AUDIO__CODEC.cat
 DriverVer   = 09/06/2013, 1.0.0.0
 
-[ClassInstall32]
+[DefaultInstall]
 Addreg = libusb_class_install_add_reg
 
 [libusb_class_install_add_reg]

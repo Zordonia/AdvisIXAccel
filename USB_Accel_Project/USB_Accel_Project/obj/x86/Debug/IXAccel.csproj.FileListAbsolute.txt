@@ -1,4 +1,3 @@
-C:\Users\Gordon\Documents\GitHub\IXAccel\USB_Accel_Project\USB_Accel_Project\obj\x86\Debug\IXAccel.csprojResolveAssemblyReference.cache
 C:\Users\Gordon\Documents\GitHub\IXAccel\USB_Accel_Project\USB_Accel_Project\obj\x86\Debug\IXAccel.IXAccelHome.resources
 C:\Users\Gordon\Documents\GitHub\IXAccel\USB_Accel_Project\USB_Accel_Project\obj\x86\Debug\IXAccel.Properties.Resources.resources
 C:\Users\Gordon\Documents\GitHub\IXAccel\USB_Accel_Project\USB_Accel_Project\obj\x86\Debug\IXAccel.csproj.GenerateResource.Cache

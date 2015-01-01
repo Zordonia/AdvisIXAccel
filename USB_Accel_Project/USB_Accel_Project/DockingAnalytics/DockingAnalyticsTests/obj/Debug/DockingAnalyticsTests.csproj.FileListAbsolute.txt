@@ -9,5 +9,4 @@ C:\Users\Gordon\Documents\GitHub\IXAccel\USB_Accel_Project\USB_Accel_Project\Doc
 C:\Users\Gordon\Documents\GitHub\IXAccel\USB_Accel_Project\USB_Accel_Project\DockingAnalytics\DockingAnalyticsTests\bin\Debug\LibUsbDotNet.dll
 C:\Users\Gordon\Documents\GitHub\IXAccel\USB_Accel_Project\USB_Accel_Project\DockingAnalytics\DockingAnalyticsTests\bin\Debug\OpenTK.dll
 C:\Users\Gordon\Documents\GitHub\IXAccel\USB_Accel_Project\USB_Accel_Project\DockingAnalytics\DockingAnalyticsTests\bin\Debug\OpenTK.GLControl.dll
-C:\Users\Gordon\Documents\GitHub\IXAccel\USB_Accel_Project\USB_Accel_Project\DockingAnalytics\DockingAnalyticsTests\bin\Debug\DockingAnalytics.pdb
 C:\Users\Gordon\Documents\GitHub\IXAccel\USB_Accel_Project\USB_Accel_Project\DockingAnalytics\DockingAnalyticsTests\bin\Debug\DockingAnalyticsTests.dll.config

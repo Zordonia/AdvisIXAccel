@@ -1,0 +1,15 @@
+C:\Users\Gordon\Documents\GitHub\IXAccel\USB_Accel_Project\USB_Accel_Project\InstallUSBAction\bin\Release\InstallUSBAction.dll
+C:\Users\Gordon\Documents\GitHub\IXAccel\USB_Accel_Project\USB_Accel_Project\InstallUSBAction\bin\Release\InstallUSBAction.pdb
+C:\Users\Gordon\Documents\GitHub\IXAccel\USB_Accel_Project\USB_Accel_Project\InstallUSBAction\obj\Release\InstallUSBAction.csprojResolveAssemblyReference.cache
+C:\Users\Gordon\Documents\GitHub\IXAccel\USB_Accel_Project\USB_Accel_Project\InstallUSBAction\obj\Release\InstallUSBAction.dll
+C:\Users\Gordon\Documents\GitHub\IXAccel\USB_Accel_Project\USB_Accel_Project\InstallUSBAction\obj\Release\InstallUSBAction.pdb
+C:\Users\Gordon\Documents\GitHub\IXAccel\USB_Accel_Project\USB_Accel_Project\InstallUSBAction\bin\Release\USB_AUDIO__CODEC\amd64\libusb0.dll
+C:\Users\Gordon\Documents\GitHub\IXAccel\USB_Accel_Project\USB_Accel_Project\InstallUSBAction\bin\Release\USB_AUDIO__CODEC\ia64\libusb0.dll
+C:\Users\Gordon\Documents\GitHub\IXAccel\USB_Accel_Project\USB_Accel_Project\InstallUSBAction\bin\Release\USB_AUDIO__CODEC\libusb-win32-bin-README.txt
+C:\Users\Gordon\Documents\GitHub\IXAccel\USB_Accel_Project\USB_Accel_Project\InstallUSBAction\bin\Release\USB_AUDIO__CODEC\README_USB_AUDIO__CODEC.htm
+C:\Users\Gordon\Documents\GitHub\IXAccel\USB_Accel_Project\USB_Accel_Project\InstallUSBAction\bin\Release\USB_AUDIO__CODEC\USB_AUDIO__CODEC.inf
+C:\Users\Gordon\Documents\GitHub\IXAccel\USB_Accel_Project\USB_Accel_Project\InstallUSBAction\bin\Release\USB_AUDIO__CODEC\x86\libusb0_x86.dll
+C:\Users\Gordon\Documents\GitHub\IXAccel\USB_Accel_Project\USB_Accel_Project\InstallUSBAction\bin\Release\USB_AUDIO__CODEC\amd64\libusb0.sys
+C:\Users\Gordon\Documents\GitHub\IXAccel\USB_Accel_Project\USB_Accel_Project\InstallUSBAction\bin\Release\USB_AUDIO__CODEC\ia64\libusb0.sys
+C:\Users\Gordon\Documents\GitHub\IXAccel\USB_Accel_Project\USB_Accel_Project\InstallUSBAction\bin\Release\USB_AUDIO__CODEC\USB_AUDIO__CODEC.cat
+C:\Users\Gordon\Documents\GitHub\IXAccel\USB_Accel_Project\USB_Accel_Project\InstallUSBAction\bin\Release\USB_AUDIO__CODEC\x86\libusb0.sys

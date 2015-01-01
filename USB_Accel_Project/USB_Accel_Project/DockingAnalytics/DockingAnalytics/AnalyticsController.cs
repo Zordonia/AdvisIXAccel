@@ -618,7 +618,10 @@ namespace DockingAnalytics
         {
             isReading = false;
             USBClassObject.RequestStop();
-            GraphUpdater.RequestStop();
+            if (GraphUpdater != null)
+            {
+                GraphUpdater.RequestStop();
+            }
         }
 
         public void AnalyticsSetConsoleTextboxThreadSafe(string text)
@@ -732,7 +735,8 @@ namespace DockingAnalytics
             try
             {
                 // Find and open the usb device.
-                UsbRegDeviceList regList = UsbDevice.AllDevices.FindAll(MyUsbFinder);
+                UsbRegDeviceList regList =
+                    UsbDevice.AllDevices.FindAll(MyUsbFinder);
                 if (regList.Count == 0) throw new Exception("Device Not Found.");
 
                 // Look through all conected devices with this vid and pid until
