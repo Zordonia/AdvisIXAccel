@@ -1,15 +1,11 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
-MinimumVisualStudioVersion = 10.0.40219.1
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IXAccel", "IXAccel.csproj", "{23E8B069-F930-457F-B8BB-D13CEFD015F6}"
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "IXAccel Installer", "..\IXAccel Installer\IXAccel Installer.vdproj", "{2EBD2B62-C0FD-4A03-A4B0-860D6A7D91B7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InstallUSBAction", "InstallUSBAction\InstallUSBAction.csproj", "{AC6E0799-67A6-4F6D-AA72-8BA30BE57601}"
-EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "IXAccel Setup", "IXAccel Setup\IXAccel Setup.vdproj", "{A53C834C-BCC7-4747-8515-E34D5BBD32A9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,12 +47,6 @@ Global
 		{AC6E0799-67A6-4F6D-AA72-8BA30BE57601}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{AC6E0799-67A6-4F6D-AA72-8BA30BE57601}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{AC6E0799-67A6-4F6D-AA72-8BA30BE57601}.Release|x86.ActiveCfg = Release|Any CPU
-		{A53C834C-BCC7-4747-8515-E34D5BBD32A9}.Debug|Any CPU.ActiveCfg = Debug
-		{A53C834C-BCC7-4747-8515-E34D5BBD32A9}.Debug|Mixed Platforms.ActiveCfg = Debug
-		{A53C834C-BCC7-4747-8515-E34D5BBD32A9}.Debug|x86.ActiveCfg = Debug
-		{A53C834C-BCC7-4747-8515-E34D5BBD32A9}.Release|Any CPU.ActiveCfg = Release
-		{A53C834C-BCC7-4747-8515-E34D5BBD32A9}.Release|Mixed Platforms.ActiveCfg = Release
-		{A53C834C-BCC7-4747-8515-E34D5BBD32A9}.Release|x86.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

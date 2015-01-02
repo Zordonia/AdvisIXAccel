@@ -1,4 +1,5 @@
 C:\Users\Gordon\Documents\GitHub\IXAccel\USB_Accel_Project\USB_Accel_Project\DockingAnalytics\DockingAnalytics\bin\Release\DockingAnalytics.exe.config
+C:\Users\Gordon\Documents\GitHub\IXAccel\USB_Accel_Project\USB_Accel_Project\DockingAnalytics\DockingAnalytics\obj\x86\Release\DockingAnalytics.csprojResolveAssemblyReference.cache
 C:\Users\Gordon\Documents\GitHub\IXAccel\USB_Accel_Project\USB_Accel_Project\DockingAnalytics\DockingAnalytics\obj\x86\Release\DockingAnalytics.BaseDock.resources
 C:\Users\Gordon\Documents\GitHub\IXAccel\USB_Accel_Project\USB_Accel_Project\DockingAnalytics\DockingAnalytics\obj\x86\Release\DockingAnalytics.Document.resources
 C:\Users\Gordon\Documents\GitHub\IXAccel\USB_Accel_Project\USB_Accel_Project\DockingAnalytics\DockingAnalytics\obj\x86\Release\DockingAnalytics.ExplorerDock.resources
@@ -52,4 +53,3 @@ C:\Users\advis\Documents\AdvisIXAccel\USB_Accel_Project\USB_Accel_Project\Dockin
 C:\Users\advis\Documents\AdvisIXAccel\USB_Accel_Project\USB_Accel_Project\DockingAnalytics\DockingAnalytics\obj\x86\Release\DockingAnalytics.csproj.GenerateResource.Cache
 C:\Users\advis\Documents\AdvisIXAccel\USB_Accel_Project\USB_Accel_Project\DockingAnalytics\DockingAnalytics\obj\x86\Release\DockingAnalytics.exe
 C:\Users\advis\Documents\AdvisIXAccel\USB_Accel_Project\USB_Accel_Project\DockingAnalytics\DockingAnalytics\obj\x86\Release\DockingAnalytics.pdb
-C:\Users\Gordon\Documents\GitHub\IXAccel\USB_Accel_Project\USB_Accel_Project\DockingAnalytics\DockingAnalytics\obj\x86\Release\DockingAnalytics.csprojResolveAssemblyReference.cache

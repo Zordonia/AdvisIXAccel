@@ -26,6 +26,7 @@ namespace InstallUSBAction
         [System.Security.Permissions.SecurityPermission(System.Security.Permissions.SecurityAction.Demand)]
         public override void Commit(IDictionary savedState)
         {
+            base.Commit(savedState);
 
             System.Diagnostics.Process process = new System.Diagnostics.Process();
             System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
@@ -41,7 +42,6 @@ namespace InstallUSBAction
 
             process.StartInfo = startInfo;
             process.Start();
-            base.Commit(savedState);
         }
 
         [System.Security.Permissions.SecurityPermission(System.Security.Permissions.SecurityAction.Demand)]
